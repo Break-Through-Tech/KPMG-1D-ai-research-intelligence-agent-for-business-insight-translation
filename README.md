@@ -9,7 +9,7 @@
 |------------------------|---------------|--------------------------------------------------------------------------|
 | Bhoomi Patni           | @             |                                                                          |
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
-| Brianna Wilkins        | @             |                                                                          |
+| Brianna Wilkins        | @b1wilks             |                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
 | Matias Freire          | @             |                                                                          |
 | Shah Chaitanya Raj     | @             |                                                                          |
