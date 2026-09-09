@@ -7,7 +7,7 @@
 
 | Name                   | GitHub Handle | Contribution                                                             |
 |------------------------|---------------|--------------------------------------------------------------------------|
-| Bhoomi Patni           | @             |                                                                          |
+| Bhoomi Patni           | @bhoomipatni  |                                                                          |
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @b1wilks             |                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
