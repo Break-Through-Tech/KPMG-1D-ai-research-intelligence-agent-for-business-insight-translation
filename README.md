@@ -5,24 +5,21 @@
 
 **Example:**
 
-| Name             | GitHub Handle | Contribution                                                             |
-|------------------|---------------|--------------------------------------------------------------------------|
-| Taylor Nguyen    | @taylornguyen | Data exploration, visualization, overall project coordination            |
-| Jordan Ramirez   | @jramirez     | Data collection, exploratory data analysis (EDA), dataset documentation  |
-| Amina Hassan     | @aminahassan  | Data preprocessing, feature engineering, data validation                 |
-| Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
-| Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
+| Name                   | GitHub Handle | Contribution                                                             |
+|------------------------|---------------|--------------------------------------------------------------------------|
+| Bhoomi Patni           | @             |                                                                          |
+| Pratima Nallapareddy   | @             |                                                                          |
+| Brianna Wilkins        | @             |                                                                          |
+| Samita Bomasamudram    | @samita-boma  |                                                                          |
+| Matias Freire          | @             |                                                                          |
+| Shah Chaitanya Raj     | @             |                                                                          |
+| Madison Lizbinski      | @             |                                                                          |
 
 ---
 
 ## 🎯 **Project Highlights**
 
-**Example:**
-
-- Developed a machine learning model using `[model type/technique]` to address `[challenge project task]`.
-- Achieved `[key metric or result]`, demonstrating `[value or impact]` for `[host company]`.
-- Generated actionable insights to inform business decisions at `[host company or stakeholders]`.
-- Implemented `[specific methodology]` to address industry constraints or expectations.
+-
 
 ---
 
