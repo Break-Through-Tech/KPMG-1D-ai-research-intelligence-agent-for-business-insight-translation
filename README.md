@@ -45,9 +45,10 @@
 
 **Describe:**
 
-- How this project is connected to the Break Through Tech AI Program
-- Your AI Studio host company and the project objective and scope
-- The real-world significance of the problem and the potential impact of your work
+**Connection to Break Through Tech AI Program**: This project is part of the Break Through Tech AI Studio, where students work with industry partners to apply AI and machine learning concepts to real-world business challenges. Our team is applying concepts including natural language processing, retrieval-augmented generation (RAG), embeddings, vector search, and large language models to develop a practical AI solution.
+**AI Studio host company, project objective, and scope:**: Our AI Studio host company is KPMG, and our project focuses on developing an AI Research Intelligence Agent for Business Insight Translation. The objective is to help users identify relevant AI research, retrieve supporting information from research papers, generate concise summaries with citations, and translate technical findings into actionable business insights. The project scope includes building a research data ingestion pipeline, developing and evaluating a RAG-based retrieval system, implementing LLM-based summarization, and creating a framework for translating technical research into business-relevant recommendations.
+**Real World Impact**: AI research is advancing rapidly, making it difficult for businesses to efficiently identify and understand developments that may affect their strategies, products, and operations. Our project aims to reduce the time and effort required to navigate technical research by connecting relevant academic findings with practical business applications. A successful solution could help professionals more efficiently monitor emerging AI developments, evaluate their relevance, and make more informed decisions about potential opportunities and applications.
+
 
 ---
 
