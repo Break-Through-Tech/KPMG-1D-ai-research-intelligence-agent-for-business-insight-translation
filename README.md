@@ -8,7 +8,7 @@
 | Name                   | GitHub Handle | Contribution                                                             |
 |------------------------|---------------|--------------------------------------------------------------------------|
 | Bhoomi Patni           | @             |                                                                          |
-| Pratima Nallapareddy   | @             |                                                                          |
+| Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @             |                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
 | Matias Freire          | @             |                                                                          |
