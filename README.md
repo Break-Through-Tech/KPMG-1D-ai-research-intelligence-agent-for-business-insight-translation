@@ -13,7 +13,7 @@
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
 | Matias Freire          | @             |                                                                          |
 | Chaitanya Raj Shah     | @Chats-001    |                                                                          |
-| Madison Lizbinski      | @             |                                                                          |
+| Madison Lizbinski      | @Madisonlizbinski   |                                                                          |
 
 ---
 
