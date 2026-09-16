@@ -12,7 +12,7 @@
 | Brianna Wilkins        | @b1wilks             |                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
 | Matias Freire          | @             |                                                                          |
-| Chaitanya Raj Shah     | @Chats-001    |                                                                          |
+| Chaitanya Raj Shah     | @cr-shah      |                                                                          |
 | Madison Lizbinski      | @Madisonlizbinski   |                                                                          |
 
 ---
