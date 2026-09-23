@@ -11,7 +11,7 @@
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @b1wilks             |                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
-| Matias Freire          | @             |                                                                          |
+| Matias Freire          | @MatiasPF1       |                                                                          |
 | Chaitanya Raj Shah     | @cr-shah      |                                                                          |
 | Madison Lizbinski      | @Madisonlizbinski   |                                                                          |
 
