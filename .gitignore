@@ -1,1 +1,4 @@
 
+# Vector database (rebuilt by Indexing.ipynb); keep only the empty folder
+data/chroma/*
+!data/chroma/.gitkeep
