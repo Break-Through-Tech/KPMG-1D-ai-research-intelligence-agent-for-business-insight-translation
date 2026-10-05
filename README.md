@@ -19,19 +19,35 @@
 
 ## 🎯 **Project Highlights**
 
--
+- Fixed manifest for the five supplied research PDFs and validated citation metadata.
+- Reproducible paper ingestion with explicit arXiv collection and offline tests.
 
 ---
 
 ## 👩🏽‍💻 **Setup and Installation**
 
-**Provide step-by-step instructions so someone else can run your code and reproduce your results. Depending on your setup, include:**
+The current implementation validates a fixed paper manifest and prepares a
+paper catalog. Use Python 3.11 or newer and run from the repository root:
 
-* How to clone the repository
-* How to install dependencies
-* How to set up the environment
-* How to access the dataset(s)
-* How to run the notebook or scripts
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+PYTHONPATH=src python -m research_pipeline.ingestion_cli ingest
+PYTHONPATH=src python -m unittest discover -s tests -v
+```
+
+This stage uses the standard library and needs no third-party packages. The
+default command uses the five supplied PDFs without network access and writes
+`data/processed/papers.jsonl` only when all manifest PDFs are available. The
+integration check found 5/5 PDFs, and all 13 offline tests pass.
+
+Generated catalogs and newly downloaded PDFs are ignored by Git; the supplied
+PDFs remain tracked in their original locations. Optional collection accepts
+explicit versioned arXiv IDs and downloads PDFs only when requested.
+
+See [the ingestion guide](docs/pipeline.md) for commands, data contracts,
+validation, limitations, and the proposed handoff to retrieval work. PDF text
+extraction, chunking, embeddings, and generation are planned follow-up work.
 
 ---
 

@@ -1,1 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
 
+# Downloaded source documents and generated pipeline artifacts.
+data/raw/pdfs/
+data/processed/
+data/chroma/
+
+# Local configuration and secrets.
+.env
+.env.*
+!.env.example
