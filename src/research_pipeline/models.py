@@ -39,6 +39,9 @@ class PaperMetadata:
     def from_dict(cls, value: dict[str, Any]) -> PaperMetadata:
         """Validate and construct metadata from a JSON-compatible mapping."""
 
+        if not isinstance(value, dict):
+            raise ValueError("paper metadata must be a JSON object")
+
         required = {
             "paper_id",
             "paper_version",

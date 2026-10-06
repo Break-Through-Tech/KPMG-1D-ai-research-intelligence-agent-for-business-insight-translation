@@ -48,7 +48,7 @@ failed extraction preserves previous pages by default; `--allow-partial`
 explicitly allows usable incomplete output but still returns exit code 2.
 Total failure returns 3 and never publishes.
 
-The independently tested ingestion/extraction boundary passes 31 offline tests.
+The independently tested ingestion/extraction boundary passes 32 offline tests.
 The supplied corpus produces 104 pages and 373,982 cleaned characters from 5/5
 papers, with valid citation metadata and byte-identical repeated outputs.
 

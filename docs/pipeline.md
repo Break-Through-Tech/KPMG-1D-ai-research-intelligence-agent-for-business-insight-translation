@@ -161,7 +161,7 @@ The merged PR 1 baseline was revalidated before adding extraction:
 The commands above then ran in a fresh virtual environment in an isolated
 checkout containing PRs 1–2 only (no chunking, combined CLI, or runner):
 
-- All 31 offline tests passed: the original 13 ingestion tests plus 18
+- All 32 offline tests passed: the original 13 ingestion tests plus 19
   extraction, real-PDF CLI, and page-contract tests.
 - Both ingestion and extraction returned `success`, exit code 0.
 - All 5 PDFs parsed: 104 pages and 373,982 cleaned characters.
@@ -209,12 +209,16 @@ against arXiv as part of this validation.
 
 Extraction fixtures cover conservative cleanup, blank-page positions, zero-page
 PDFs, mixed usable/no-text papers, partial/total missing and parsing failures,
-later-page failure without leaked partial pages, malformed metadata, empty
+later-page failure without leaked partial pages, malformed metadata and
+non-object manifest records, empty
 corpora, prior-output preservation, explicit partial publication, cleanup of
 staging, unchanged catalogs, citation round trips, and exit codes 0/2/3.
 
 The original local three-stage prototype's 42 tests were also re-run and passed
-as a reference check. Those future-stage modules and tests are not in PR 2.
+as a reference check. Its full runner was executed twice with scratch outputs:
+271 unique chunks, maximum 1,800 characters, citation-storage round trip valid,
+and identical SHA-256 hashes for all four artifacts. Those future-stage modules
+and tests are not in PR 2, and the original folder's outputs were not replaced.
 Preparation counts are not complete EDA or a measure of retrieval quality.
 
 ## Retrieval handoff and next stages

@@ -177,6 +177,15 @@ class ExtractionCliTests(unittest.TestCase):
         self.assertIn("authors", report["error"])
         self.assert_previous_pages_preserved()
 
+    def test_nonobject_manifest_records_return_failure_without_traceback(self) -> None:
+        for record in (None, 42, "paper", []):
+            with self.subTest(record=record):
+                write_json(self.config.resolve(self.config.manifest_path), [record])
+                exit_code, report = self.invoke()
+                self.assertEqual((exit_code, report["outcome"]), (3, "failure"))
+                self.assertIn("JSON object", report["error"])
+                self.assert_previous_pages_preserved()
+
 
 class PageContractTests(unittest.TestCase):
     def test_invalid_page_numbers_are_rejected(self) -> None:
