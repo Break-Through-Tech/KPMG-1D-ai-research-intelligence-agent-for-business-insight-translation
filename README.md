@@ -21,33 +21,44 @@
 
 - Fixed manifest for the five supplied research PDFs and validated citation metadata.
 - Reproducible paper ingestion with explicit arXiv collection and offline tests.
+- Page-by-page PDF extraction with original page citations and conservative cleanup.
 
 ---
 
 ## 👩🏽‍💻 **Setup and Installation**
 
-The current implementation validates a fixed paper manifest and prepares a
-paper catalog. Use Python 3.11 or newer and run from the repository root:
+The current implementation validates a fixed paper manifest, prepares a paper
+catalog, and extracts citation-preserving PDF pages. Use Python 3.11 or newer
+and run from the repository root:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+python -m pip install -r requirements.txt
 PYTHONPATH=src python -m research_pipeline.ingestion_cli ingest
+PYTHONPATH=src python -m research_pipeline.extraction_cli
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
-This stage uses the standard library and needs no third-party packages. The
-default command uses the five supplied PDFs without network access and writes
-`data/processed/papers.jsonl` only when all manifest PDFs are available. The
-integration check found 5/5 PDFs, and all 13 offline tests pass.
+Ingestion uses the standard library; extraction uses pinned `pypdf==6.1.1`.
+The default commands use the five supplied PDFs without network access.
+Ingestion writes `data/processed/papers.jsonl`; extraction writes
+`data/processed/pages.jsonl`. Complete runs publish staged output. Partial or
+failed extraction preserves previous pages by default; `--allow-partial`
+explicitly allows usable incomplete output but still returns exit code 2.
+Total failure returns 3 and never publishes.
+
+The independently tested ingestion/extraction boundary passes 31 offline tests.
+The supplied corpus produces 104 pages and 373,982 cleaned characters from 5/5
+papers, with valid citation metadata and byte-identical repeated outputs.
 
 Generated catalogs and newly downloaded PDFs are ignored by Git; the supplied
 PDFs remain tracked in their original locations. Optional collection accepts
 explicit versioned arXiv IDs and downloads PDFs only when requested.
 
-See [the ingestion guide](docs/pipeline.md) for commands, data contracts,
-validation, limitations, and the proposed handoff to retrieval work. PDF text
-extraction, chunking, embeddings, and generation are planned follow-up work.
+See [the pipeline guide](docs/pipeline.md) for commands, data contracts,
+validation, PDF limitations, and the proposed handoff to retrieval work.
+Chunking, embeddings, and generation remain follow-up work.
 
 ---
 

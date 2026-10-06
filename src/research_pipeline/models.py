@@ -1,4 +1,4 @@
-"""Validated paper metadata contract for reproducible ingestion."""
+"""Validated paper metadata and source-preserving PDF page contracts."""
 
 from __future__ import annotations
 
@@ -97,3 +97,54 @@ class PaperMetadata:
         record = asdict(self)
         record["authors"] = list(self.authors)
         return record
+
+
+@dataclass(frozen=True)
+class ExtractedPage:
+    """One original PDF page with complete paper citation metadata.
+
+    Page numbers are 1-based physical PDF positions, not printed page labels.
+    Blank pages retain their position and have an empty text string.
+    """
+
+    paper_id: str
+    paper_version: str
+    title: str
+    authors: tuple[str, ...]
+    published: str
+    pdf_url: str
+    page_number: int
+    text: str
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-compatible page with an ordered author list."""
+
+        record = asdict(self)
+        record["authors"] = list(self.authors)
+        return record
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> ExtractedPage:
+        """Validate citation metadata, a positive page number, and string text.
+
+        Raises ValueError for malformed records. Page records intentionally
+        omit the local PDF path; citation fields share the paper contract.
+        """
+
+        metadata = PaperMetadata.from_dict({**value, "source_path": "not-used.pdf"})
+        page_number = value.get("page_number")
+        if isinstance(page_number, bool) or not isinstance(page_number, int) or page_number < 1:
+            raise ValueError("page_number must be a positive integer")
+        text = value.get("text")
+        if not isinstance(text, str):
+            raise ValueError("text must be a string")
+        return cls(
+            paper_id=metadata.paper_id,
+            paper_version=metadata.paper_version,
+            title=metadata.title,
+            authors=metadata.authors,
+            published=metadata.published,
+            pdf_url=metadata.pdf_url,
+            page_number=page_number,
+            text=text,
+        )
