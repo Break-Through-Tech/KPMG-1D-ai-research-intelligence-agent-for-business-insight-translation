@@ -40,7 +40,8 @@ PYTHONPATH=src python -m research_pipeline.extraction_cli
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
-Ingestion uses the standard library; extraction uses pinned `pypdf==6.1.1`.
+Ingestion uses the standard library; extraction uses patched `pypdf[fonts]==6.19.0`
+and pinned `fonttools==4.66.1` for embedded font decoding.
 The default commands use the five supplied PDFs without network access.
 Ingestion writes `data/processed/papers.jsonl`; extraction writes
 `data/processed/pages.jsonl`. Complete runs publish staged output. Partial or
@@ -48,9 +49,11 @@ failed extraction preserves previous pages by default; `--allow-partial`
 explicitly allows usable incomplete output but still returns exit code 2.
 Total failure returns 3 and never publishes.
 
-The independently tested ingestion/extraction boundary passes 32 offline tests.
-The supplied corpus produces 104 pages and 373,982 cleaned characters from 5/5
+The independently tested ingestion/extraction boundary passes 55 offline tests.
+The supplied corpus produces 104 pages and 373,976 cleaned characters from 5/5
 papers, with valid citation metadata and byte-identical repeated outputs.
+Validation rejects mismatched paper/version URLs and shared PDF locations;
+downloads publish atomically and failed temporary writes are cleaned up.
 
 Generated catalogs and newly downloaded PDFs are ignored by Git; the supplied
 PDFs remain tracked in their original locations. Optional collection accepts
@@ -58,6 +61,8 @@ explicit versioned arXiv IDs and downloads PDFs only when requested.
 
 See [the pipeline guide](docs/pipeline.md) for commands, data contracts,
 validation, PDF limitations, and the proposed handoff to retrieval work.
+See [the PR 2 review fixes](docs/pr2_review_fixes.md) for the audit corrections
+and the extraction comparison after the dependency upgrade.
 Chunking, embeddings, and generation remain follow-up work.
 
 ---

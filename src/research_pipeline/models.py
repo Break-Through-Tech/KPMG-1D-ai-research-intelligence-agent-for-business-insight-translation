@@ -7,9 +7,10 @@ from datetime import date
 from pathlib import Path
 import re
 from typing import Any
+from urllib.parse import urlsplit
 
 
-ARXIV_ID_PATTERN = re.compile(r"^(?:[a-z-]+(?:\.[A-Z]{2})?/\d{7}|\d{4}\.\d{4,5})v\d+$", re.IGNORECASE)
+ARXIV_ID_PATTERN = re.compile(r"^(?:[a-z-]+(?:\.[A-Z]{2})?/\d{7}|\d{4}\.\d{4,5})v[1-9]\d*$")
 
 
 def _required_text(value: Any, field_name: str) -> str:
@@ -58,7 +59,7 @@ class PaperMetadata:
         paper_id = _required_text(value["paper_id"], "paper_id")
         paper_version = _required_text(value["paper_version"], "paper_version")
         if not ARXIV_ID_PATTERN.fullmatch(paper_id):
-            raise ValueError(f"paper_id is not a versioned arXiv ID: {paper_id}")
+            raise ValueError(f"paper_id must be a canonical versioned arXiv ID: {paper_id}")
         if not re.fullmatch(r"v[1-9]\d*", paper_version):
             raise ValueError(f"paper_version is invalid: {paper_version}")
         if not paper_id.lower().endswith(paper_version.lower()):
@@ -71,13 +72,21 @@ class PaperMetadata:
 
         published = _required_text(value["published"], "published")
         try:
-            date.fromisoformat(published)
+            if date.fromisoformat(published).isoformat() != published:
+                raise ValueError("noncanonical calendar date")
         except ValueError as error:
             raise ValueError("published must use ISO date format YYYY-MM-DD") from error
 
         pdf_url = _required_text(value["pdf_url"], "pdf_url")
-        if not pdf_url.startswith(("https://arxiv.org/pdf/", "http://arxiv.org/pdf/")):
-            raise ValueError("pdf_url must point to an arXiv PDF")
+        parsed_url = urlsplit(pdf_url)
+        if (
+            parsed_url.scheme not in ("http", "https")
+            or parsed_url.netloc.lower() != "arxiv.org"
+            or parsed_url.path not in (f"/pdf/{paper_id}", f"/pdf/{paper_id}.pdf")
+            or parsed_url.query
+            or parsed_url.fragment
+        ):
+            raise ValueError("pdf_url must point to the same versioned arXiv paper_id")
 
         source_path = _required_text(value["source_path"], "source_path")
         source_parts = Path(source_path).parts

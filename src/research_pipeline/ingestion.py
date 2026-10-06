@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ElementTree
 from research_pipeline.config import PipelineConfig
 from research_pipeline.models import ARXIV_ID_PATTERN, PaperMetadata
 from research_pipeline.outcomes import FAILURE, PARTIAL_FAILURE, SUCCESS
-from research_pipeline.storage import read_json, write_json, write_jsonl
+from research_pipeline.storage import read_json, write_bytes, write_json, write_jsonl
 
 
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
@@ -52,28 +52,80 @@ class IngestionReport:
         }
 
 
-def load_manifest(path: Path) -> list[PaperMetadata]:
-    """Load a JSON paper manifest and reject duplicate versioned paper IDs."""
+def _validate_paper_locations(
+    papers: list[PaperMetadata], repository_root: Path | None = None,
+) -> None:
+    """Reject duplicate identities and conflicting normalized PDF locations."""
+
+    seen_ids: set[str] = set()
+    sources: dict[Path, str] = {}
+    file_identities: dict[tuple[int, int], str] = {}
+    for paper in papers:
+        if paper.paper_id in seen_ids:
+            raise ValueError(f"duplicate paper_id in manifest: {paper.paper_id}")
+        seen_ids.add(paper.paper_id)
+        source = Path(paper.source_path)
+        if repository_root is not None:
+            source = (repository_root / source).resolve()
+        if source in sources:
+            raise ValueError(
+                f"source_path is shared by different papers: {sources[source]} and {paper.paper_id}"
+            )
+        sources[source] = paper.paper_id
+        if repository_root is not None and source.is_file():
+            source_stat = source.stat()
+            file_identity = (source_stat.st_dev, source_stat.st_ino)
+            if file_identity in file_identities:
+                raise ValueError(
+                    f"source_path aliases the same PDF for different papers: "
+                    f"{file_identities[file_identity]} and {paper.paper_id}"
+                )
+            file_identities[file_identity] = paper.paper_id
+
+
+def load_manifest(path: Path, repository_root: Path | None = None) -> list[PaperMetadata]:
+    """Load citation metadata without allowing conflicting paper identities.
+
+    Args:
+        path: UTF-8 JSON manifest containing one metadata object per paper.
+        repository_root: Root for resolving local source paths. All pipeline
+            stages supply this to detect symlinks, hardlinks, and case aliases
+            of existing files. Without it, only lexical paths are compared.
+
+    Returns:
+        Validated paper records in manifest order.
+
+    Raises:
+        ValueError: Metadata, identifiers, or source locations violate the contract.
+        OSError: Reading the manifest or inspecting existing sources fails.
+    """
 
     raw_records = read_json(path)
     if not isinstance(raw_records, list):
         raise ValueError("paper manifest must be a JSON list")
     papers = [PaperMetadata.from_dict(record) for record in raw_records]
-    paper_ids = [paper.paper_id for paper in papers]
-    duplicates = sorted({paper_id for paper_id in paper_ids if paper_ids.count(paper_id) > 1})
-    if duplicates:
-        raise ValueError(f"duplicate paper_id values in manifest: {', '.join(duplicates)}")
+    _validate_paper_locations(papers, repository_root)
     return papers
 
 
-def save_manifest(path: Path, papers: list[PaperMetadata]) -> None:
-    """Save one stable, paper-ID-sorted manifest record per paper."""
+def save_manifest(
+    path: Path, papers: list[PaperMetadata], repository_root: Path | None = None,
+) -> None:
+    """Save one stable, paper-ID-sorted manifest record per paper.
 
-    unique: dict[str, PaperMetadata] = {}
-    for paper in papers:
-        if paper.paper_id in unique:
-            raise ValueError(f"duplicate paper_id cannot be saved: {paper.paper_id}")
-        unique[paper.paper_id] = paper
+    Args:
+        path: Final manifest location, published using an atomic replacement.
+        papers: Validated paper objects with distinct identities and source paths.
+        repository_root: Supply the source root to also reject existing-file aliases.
+
+    Raises:
+        ValueError: Duplicate IDs or conflicting source paths are present.
+        OSError: Writing, source inspection, or replacement fails. Prior manifest
+            bytes remain intact when publication fails.
+    """
+
+    _validate_paper_locations(papers, repository_root)
+    unique = {paper.paper_id: paper for paper in papers}
     write_json(path, [unique[paper_id].to_dict() for paper_id in sorted(unique)])
 
 
@@ -81,7 +133,7 @@ def build_paper_catalog(config: PipelineConfig) -> IngestionReport:
     """Validate the fixed manifest, locate PDFs, and write retrieval-ready metadata."""
 
     manifest_path = config.resolve(config.manifest_path)
-    papers = load_manifest(manifest_path)
+    papers = load_manifest(manifest_path, config.repository_root)
     report = IngestionReport(manifest_papers=len(papers), requested_papers=len(papers))
     catalog_records: list[dict[str, object]] = []
 
@@ -132,7 +184,8 @@ def _normalize_requested_id(paper_id: str) -> str:
     normalized = paper_id.strip()
     if not ARXIV_ID_PATTERN.fullmatch(normalized):
         raise ValueError(
-            f"arXiv ID must include a version for reproducibility (example 2608.20316v1): {paper_id}"
+            f"arXiv ID must include a version and use canonical casing "
+            f"(example 2608.20316v1): {paper_id}"
         )
     return normalized
 
@@ -211,7 +264,7 @@ def collect_arxiv_papers(
         raise ValueError("requested arXiv IDs must not contain duplicates")
 
     manifest_path = config.resolve(config.manifest_path)
-    existing_papers = load_manifest(manifest_path) if manifest_path.exists() else []
+    existing_papers = load_manifest(manifest_path, config.repository_root) if manifest_path.exists() else []
     papers_by_id = {paper.paper_id: paper for paper in existing_papers}
     report = IngestionReport(requested_papers=len(normalized_ids))
     pacer = ArxivRequestPacer(clock=clock, sleep=sleep)
@@ -226,6 +279,7 @@ def collect_arxiv_papers(
             try:
                 pacer.wait_for_next_attempt()
                 paper = _parse_arxiv_entry(fetch(query_url), paper_id, download_relative_path.as_posix())
+                _validate_paper_locations([*papers_by_id.values(), paper], config.repository_root)
             except Exception as error:  # Network and response failures are per-paper outcomes.
                 report.failures[paper_id] = f"metadata: {error}"
                 continue
@@ -241,13 +295,12 @@ def collect_arxiv_papers(
                 pdf_bytes = fetch(paper.pdf_url)
                 if not pdf_bytes.startswith(b"%PDF-"):
                     raise ValueError("response did not begin with a PDF header")
-                pdf_path.parent.mkdir(parents=True, exist_ok=True)
-                pdf_path.write_bytes(pdf_bytes)
+                write_bytes(pdf_path, pdf_bytes)
                 report.downloaded_pdfs.append(paper_id)
             except Exception as error:  # Report a partial failure without losing metadata.
                 report.failures[paper_id] = f"pdf: {error}"
 
-    save_manifest(manifest_path, list(papers_by_id.values()))
+    save_manifest(manifest_path, list(papers_by_id.values()), config.repository_root)
     report.manifest_papers = len(papers_by_id)
     successful_requests = len(report.added_papers) + len(report.existing_papers)
     if not report.failures:

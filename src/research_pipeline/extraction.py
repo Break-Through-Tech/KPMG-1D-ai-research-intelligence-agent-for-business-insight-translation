@@ -134,7 +134,7 @@ def extract_manifest_pages(
     extraction_cli.run_extract for staged, outcome-aware output preservation.
     """
 
-    papers = load_manifest(config.resolve(config.manifest_path))
+    papers = load_manifest(config.resolve(config.manifest_path), config.repository_root)
     report = ExtractionReport(papers_attempted=len(papers))
     extracted_pages: list[ExtractedPage] = []
 

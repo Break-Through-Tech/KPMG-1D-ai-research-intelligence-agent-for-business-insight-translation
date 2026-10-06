@@ -42,19 +42,33 @@ same required fields. Missing or blank metadata is rejected.
 
 | Field | Meaning and validation |
 |---|---|
-| `paper_id` | Unique versioned arXiv short ID, such as `2608.20316v1` or `hep-th/9901001v1`. |
+| `paper_id` | Unique canonical versioned arXiv short ID, such as `2608.20316v1` or `hep-th/9901001v1`; lowercase `v` and a positive version are required. |
 | `paper_version` | `vN` suffix matching `paper_id`. |
 | `title` | Non-empty paper title. |
 | `authors` | Non-empty ordered list of non-empty author names. |
 | `published` | ISO publication date in `YYYY-MM-DD` form. |
-| `pdf_url` | arXiv PDF URL for source attribution and optional download. |
-| `source_path` | Repository-relative PDF path; absolute paths and `..` are rejected. |
+| `pdf_url` | HTTP(S) arXiv PDF URL identifying exactly the same paper and version; optional `.pdf` suffix is accepted, queries/fragments are rejected. |
+| `source_path` | Unique repository-relative PDF path; absolute paths and `..` are rejected, as are paths sharing a PDF with another identity. |
 
 Versioned identifiers avoid silently switching to a later revision. The
 manifest fixture records the supplied papers' identities, titles, authors, and
 dates; the catalog preserves those fields. Existence and nonzero file size are
 availability checks, not proof that a PDF parses or its text is usable. Those
 checks belong to the extraction stage described below.
+
+Noncanonical dates such as `20260821` and `2026-W34-5` are rejected. IDs with
+uppercase version suffixes are rejected before collection, rather than silently
+changing identifiers or creating differently keyed duplicates. Legacy category
+prefixes use lowercase names with uppercase subject suffixes when present
+(for example `cs.LG/9901001v1`).
+
+Manifest loading and saving reject normalized duplicate paths. All pipeline
+stages provide their repository root so validation also resolves symlinks and
+checks device/inode identity for existing hardlinks and case-only filename
+aliases. A newly collected record is checked before its PDF is downloaded.
+This protects attribution; it is not a semantic proof that an arbitrary PDF
+contains the declared paper. `load_manifest` and `save_manifest` callers must
+also provide their root to request these existing-file alias checks.
 
 ## Optional explicit arXiv collection
 
@@ -83,6 +97,10 @@ limits](https://info.arxiv.org/help/api/tou.html#rate-limits). Existing metadata
 and non-empty local PDF files are skipped. Downloads must begin with a PDF
 header, but full parsing is deferred. Successful metadata is saved even if an
 optional PDF download fails, allowing a later retry without losing the record.
+PDF bytes are written to a temporary sibling and replace the final path only
+after a complete successful write and close. Failed writes/replacements preserve
+the previous destination and clean temporary files when the filesystem permits.
+They cannot leave a newly truncated final PDF that a rerun mistakes for a download.
 
 ## Outcomes and output preservation
 
@@ -97,13 +115,22 @@ request them. Any failed metadata request or requested PDF download makes
 collection return nonzero. Per-paper failures appear in the printed report.
 Catalog publication uses a staged file and replaces its destination after
 validation. This is a single-file operation in this stage.
+JSON/JSONL helpers also clean temporary files after serialization, iterator, or
+replacement errors. Atomic replacement is not a power-failure durability or
+concurrent-writer guarantee; abrupt process termination can leave temporary files.
 
 ## Page extraction and cleanup
 
 The independent extraction command reads the same validated manifest directly;
 it does not depend on a previously generated catalog or any later-stage module.
-PDF parsing uses `pypdf==6.1.1` with `strict=False` to tolerate nonfatal PDF
-format irregularities. It calls text extraction separately on every page.
+PDF parsing uses `pypdf[fonts]==6.19.0` and `fonttools==4.66.1`, with `strict=False`
+to tolerate nonfatal PDF format irregularities. The font extra supports embedded
+CFF fonts in the supplied PDFs. It calls text extraction separately on every page.
+
+The previous `pypdf==6.1.1` pin was below the maintainer's patched version for
+[malformed-stream resource exhaustion](https://github.com/py-pdf/pypdf/security/advisories/GHSA-jw7q-gvrg-4vj3).
+Upgrading reduces known dependency risk; it does not sandbox arbitrary PDFs or
+establish production security.
 
 Cleanup removes NUL characters, normalizes line endings and nonbreaking spaces,
 collapses horizontal whitespace, trims lines, and limits consecutive blank
@@ -161,10 +188,12 @@ The merged PR 1 baseline was revalidated before adding extraction:
 The commands above then ran in a fresh virtual environment in an isolated
 checkout containing PRs 1–2 only (no chunking, combined CLI, or runner):
 
-- All 32 offline tests passed: the original 13 ingestion tests plus 19
-  extraction, real-PDF CLI, and page-contract tests.
+- All 55 offline tests passed: the original 32 ingestion/extraction checks plus
+  23 citation-contract, path-alias, atomic-download, and storage regressions.
+- The 27 ingestion/metadata/storage/download tests also passed with Python's
+  `-S` flag, without site packages, confirming standard-library ingestion.
 - Both ingestion and extraction returned `success`, exit code 0.
-- All 5 PDFs parsed: 104 pages and 373,982 cleaned characters.
+- All 5 PDFs parsed: 104 pages and 373,976 cleaned characters.
 - Zero missing PDFs, parsing failures, no-text papers, or empty pages.
 - Every stored citation field matched its manifest paper; all page sequences
   were contiguous from 1, and JSONL/model round trips preserved records.
@@ -185,7 +214,7 @@ Repeated output SHA-256 values:
 
 ```text
 papers.jsonl f51899b772dd2ae3844844c6b62a9f09e2b2a02e6c2e1c98770531e8065859ce
-pages.jsonl  9da787ca161cc9d9173bc64dac083ba7552ecfca7512c9bc7584d484cb883b43
+pages.jsonl  afb19df94fc17cd4e369bf0a07e4e6f9be0c2682043c708f1f80e5bc0e5a7e1a
 ```
 
 To reproduce the byte comparison, hash both files, rerun both stage commands,
@@ -215,11 +244,18 @@ corpora, prior-output preservation, explicit partial publication, cleanup of
 staging, unchanged catalogs, citation round trips, and exit codes 0/2/3.
 
 The original local three-stage prototype's 42 tests were also re-run and passed
-as a reference check. Its full runner was executed twice with scratch outputs:
-271 unique chunks, maximum 1,800 characters, citation-storage round trip valid,
-and identical SHA-256 hashes for all four artifacts. Those future-stage modules
-and tests are not in PR 2, and the original folder's outputs were not replaced.
+as a separate reference check. Those future-stage modules and tests are not in
+PR 2, and the original folder's outputs were not replaced. Their extraction and
+chunk baselines must be revalidated with the patched parser when PR 3 is built.
 Preparation counts are not complete EDA or a measure of retrieval quality.
+
+The patched parser's output was compared with 6.1.1 on all 104 pages: 47 pages
+were identical, 56 differed only in whitespace, and one changed an equation
+glyph on page 19 of `2608.20316v1`. Visual inspection confirmed that both versions
+misdecode that summation glyph. The new total is six characters smaller overall,
+but there are many layout changes, not merely six deletions. Citation metadata
+and page identities are unchanged. See [the review-fix report](pr2_review_fixes.md)
+for the explicit rebaseline and known limitations.
 
 ## Retrieval handoff and next stages
 

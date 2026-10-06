@@ -18,15 +18,49 @@ def read_json(path: Path) -> Any:
         return json.load(input_file)
 
 
+def write_bytes(path: Path, value: bytes) -> None:
+    """Publish complete binary content using a temporary sibling and replacement.
+
+    Args:
+        path: Final artifact location; its parent is created if necessary.
+        value: Complete downloaded bytes to store, not a streamed response.
+
+    Raises:
+        OSError: Writing, closing, or replacement fails. The previous destination
+            remains unchanged and any temporary file is removed when possible.
+
+    Atomic replacement avoids publishing incomplete writes; it does not validate
+    PDF contents or guarantee crash durability across a power failure.
+    """
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile("wb", dir=path.parent, delete=False) as output_file:
+            temporary_path = Path(output_file.name)
+            bytes_written = output_file.write(value)
+            if bytes_written != len(value):
+                raise OSError("incomplete binary artifact write")
+        temporary_path.replace(path)
+    finally:
+        if temporary_path is not None:
+            temporary_path.unlink(missing_ok=True)
+
+
 def write_json(path: Path, value: Any) -> None:
     """Atomically write human-readable UTF-8 JSON."""
 
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as output_file:
-        json.dump(value, output_file, ensure_ascii=False, indent=2)
-        output_file.write("\n")
-        temporary_path = Path(output_file.name)
-    temporary_path.replace(path)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as output_file:
+            temporary_path = Path(output_file.name)
+            json.dump(value, output_file, ensure_ascii=False, indent=2)
+            output_file.write("\n")
+        temporary_path.replace(path)
+    finally:
+        if temporary_path is not None:
+            temporary_path.unlink(missing_ok=True)
 
 
 def write_jsonl(path: Path, records: Iterable[dict[str, Any]]) -> int:
@@ -34,12 +68,17 @@ def write_jsonl(path: Path, records: Iterable[dict[str, Any]]) -> int:
 
     path.parent.mkdir(parents=True, exist_ok=True)
     count = 0
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as output_file:
-        for record in records:
-            output_file.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
-            count += 1
-        temporary_path = Path(output_file.name)
-    temporary_path.replace(path)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as output_file:
+            temporary_path = Path(output_file.name)
+            for record in records:
+                output_file.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+                count += 1
+        temporary_path.replace(path)
+    finally:
+        if temporary_path is not None:
+            temporary_path.unlink(missing_ok=True)
     return count
 
 
