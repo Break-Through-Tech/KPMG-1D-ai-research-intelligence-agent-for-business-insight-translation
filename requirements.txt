@@ -1,1 +1,4 @@
-# Stage 1 uses Python's standard library; no third-party packages are required.
+# Ingestion uses the standard library; page extraction needs pypdf.
+pypdf[fonts]==6.19.0
+# The supplied PDFs include CFF fonts; pin the optional decoder for reproducibility.
+fonttools==4.66.1
