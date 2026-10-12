@@ -4,6 +4,9 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 
+# Vector database (rebuilt by Indexing.ipynb); keep only the empty folder
+data/chroma/*
+!data/chroma/.gitkeep
 # Downloaded source documents and generated pipeline artifacts.
 data/raw/pdfs/
 data/processed/
