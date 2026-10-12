@@ -1,0 +1,85 @@
+[
+  {
+    "paper_id": "2608.20316v1",
+    "paper_version": "v1",
+    "title": "Pandora's AI Model Routing Box: Efficient Allocation with Costly Value Estimation",
+    "authors": [
+      "Adam Fisch",
+      "Shubhendu Trivedi",
+      "Fantine Huot",
+      "William W. Cohen",
+      "Michael Kaisers",
+      "Mirella Lapata",
+      "Kate Larson",
+      "Jacob Eisenstein"
+    ],
+    "published": "2026-08-21",
+    "pdf_url": "https://arxiv.org/pdf/2608.20316v1",
+    "source_path": "data/2608.20316v1_Pandora's AI Model Routing Box Efficient Allocation with Costly Value Estimation.pdf"
+  },
+  {
+    "paper_id": "2608.20318v1",
+    "paper_version": "v1",
+    "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
+    "authors": [
+      "Yizhe Chi",
+      "Wenyi Li",
+      "Deyao Hong",
+      "Xiaoqiu Wang",
+      "Mingju Gao",
+      "Kaisen Yang",
+      "Bingxiang He",
+      "Youjie Zheng",
+      "Calvin Xiao",
+      "Qinhuai Na"
+    ],
+    "published": "2026-08-21",
+    "pdf_url": "https://arxiv.org/pdf/2608.20318v1",
+    "source_path": "data/2608.20318v1_AI4AI-Bench Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Imp.pdf"
+  },
+  {
+    "paper_id": "2608.20319v1",
+    "paper_version": "v1",
+    "title": "Inducing Task Models from Computer-Use Traces",
+    "authors": [
+      "Yucheng Jiang",
+      "Zora Zhiruo Wang",
+      "Ruishi Chen",
+      "Diyi Yang"
+    ],
+    "published": "2026-08-21",
+    "pdf_url": "https://arxiv.org/pdf/2608.20319v1",
+    "source_path": "data/2608.20319v1_Inducing Task Models from Computer-Use Traces.pdf"
+  },
+  {
+    "paper_id": "2608.20320v1",
+    "paper_version": "v1",
+    "title": "An Agentic Approach for Active Data Collection, Travel Behavior Modeling, and Weather-Sensitive Demand Prediction",
+    "authors": [
+      "Narges Ahmadi",
+      "Yubo Jiao",
+      "Jônatas Augusto Manzolli",
+      "Jiangbo Yu",
+      "Luis Miranda-Moreno"
+    ],
+    "published": "2026-08-21",
+    "pdf_url": "https://arxiv.org/pdf/2608.20320v1",
+    "source_path": "data/2608.20320v1_An Agentic Approach for Active Data Collection, Travel Behavior Modeling, and We.pdf"
+  },
+  {
+    "paper_id": "2608.20331v1",
+    "paper_version": "v1",
+    "title": "G-CARL: Grounded Checklist-Aligned Reward Learning for Patient-Oriented Medical Report Interpretation",
+    "authors": [
+      "Shiao Xie",
+      "Siyu Chen",
+      "Jianwei Lv",
+      "Bo Yuan",
+      "Yujin Wang",
+      "Xiandong Li"
+    ],
+    "published": "2026-08-21",
+    "pdf_url": "https://arxiv.org/pdf/2608.20331v1",
+    "source_path": "data/2608.20331v1_G-CARL Grounded Checklist-Aligned Reward Learning for Patient-Oriented Medical R.pdf"
+  }
+]
