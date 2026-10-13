@@ -1,9 +1,9 @@
-# Reproducible ingestion and citation-preserving page extraction
+# Reproducible ingestion, pages and citation-preserving passages
 
 Stage 1 defines the prototype corpus, validates metadata, and prepares a paper
 catalog. Stage 2 extracts each original PDF page with source citation metadata.
-Both use the five supplied PDFs as a fixed local fixture; neither builds a
-retriever or chunks text.
+Both use the five supplied PDFs as a fixed local fixture. Stage 3 adds three
+chunking profiles and a validated dataset loader; no stage builds a retriever.
 
 ## Setup and local commands
 
@@ -257,6 +257,105 @@ but there are many layout changes, not merely six deletions. Citation metadata
 and page identities are unchanged. See [the review-fix report](pr2_review_fixes.md)
 for the explicit rebaseline and known limitations.
 
+## Stage 3: local passage datasets
+
+```bash
+# Combined offline preparation, using scratch paths for PR1/PR2 stages.
+PYTHONPATH=src python -m research_pipeline.cli run
+PYTHONPATH=src python -m research_pipeline.cli inspect
+
+# Chunk existing PR2 pages, without PDF parsing or network access.
+PYTHONPATH=src python -m research_pipeline.cli chunk \
+  --pages data/processed/pages.jsonl --profile fixed_characters
+# Equivalent independently runnable entry point:
+PYTHONPATH=src python -m research_pipeline.chunking_cli --pages data/processed/pages.jsonl
+```
+
+All commands accept `--repository-root`, `--run-root`, and `--active-pointer`.
+Processing outcomes are success/0, partial_failure/2, failure/3. Default
+partial/failed runs do not select new data. `--allow-partial` can select usable
+incomplete data but still returns 2. Empty/no-text corpora never publish.
+`inspect` returns 0 for a valid selection and separately reports its dataset outcome.
+
+### Profiles and exact citation spans
+
+Every chunk stays within one original cleaned PDF page. The fields from PR2
+are retained with `schema_version`, `chunk_id`, `start_character`,
+`end_character`, `page_text_sha256`, `chunking_profile_sha256`, and nullable
+content/input token counts. Offsets are zero-based, half-open **Python Unicode
+code-point offsets into cleaned page text**, not raw PDF bytes, glyph positions,
+UTF-8 bytes, or UTF-16 offsets. Reconstruction is exactly
+`page.text[start_character:end_character]`; text is never stripped by chunking.
+IDs hash all citation fields, the page hash, span, text and effective settings.
+Same inputs/configuration produce the same IDs; changed content/configuration
+intentionally invalidates them. Hashes detect changes, not authenticity.
+
+| Profile | Limits and overlap |
+|---|---|
+| `boundary_characters` (default) | Up to 1,800 characters; prefer the last paragraph end, then sentence end, then whitespace end before the limit. If no suitable boundary exists, split at the character limit. Next start is exactly `end - 200`, except after the final chunk. A boundary must allow forward progress. |
+| `fixed_characters` | Exactly the same maximum and `end - overlap` stepping, without boundary preference; final chunk can be shorter. |
+| `tokenizer` (optional) | Up to 200 content tokens and 256 complete input tokens including special tokens. Prefer boundaries, then recount the final source substring, shrinking if necessary. Next start is the source offset of the last 40 tokens in that emitted substring, clamped to advance at least one code point; fewer available tokens means actual overlap can be smaller. Zero overlap starts at the previous end. |
+
+All nonblank pages have complete character coverage, including whitespace.
+Blank page records remain present with original 1-based citations, but generate
+no chunks. Rare whitespace-only windows in otherwise nonblank pages are kept
+and counted for lossless coverage; a future embedding adapter can skip them.
+Oversized paragraphs/unbroken words fall back to exact spans. Character splits
+can divide words or combining-character sequences without changing source text.
+
+```bash
+python -m pip install -r requirements-tokenizers.txt
+PYTHONPATH=src python -m research_pipeline.cli run --profile tokenizer \
+  --tokenizer-file path/to/local/tokenizer.json \
+  --tokenizer-model-id declared/model-id --tokenizer-revision exact-revision \
+  --token-budget 200 --token-overlap 40 --max-input-tokens 256
+```
+
+Only explicit local tokenizer JSON assets are accepted. Padding and truncation
+are disabled; no model weights or Hub downloads occur. The asset hash, declared
+identity/revision and installed tokenizer version are recorded. Identity is
+declared, not authenticated. The current input template is chunk-text-only:
+model-specific prefixes or other added text require a future adapter and budget
+adjustment. Character profiles make no model-token-limit guarantee. Incompatible
+tokenizer/Unicode offsets or impossible budgets fail rather than silently fall
+back to character estimates or truncate input.
+
+### Reproducibility and publication
+
+Each generation contains `papers.jsonl`, `pages.jsonl`, `chunks.jsonl`,
+`quality_report.json` and `run_manifest.json`. The manifest records schema and
+algorithm versions, complete effective configuration, source manifest/PDF hashes
+(or existing-pages/catalog hashes), dependency versions, coverage/exclusions,
+artifact hashes and counts. Reproducing extraction also requires the recorded
+source files, dependency versions and this code revision; reproducing tokenizer
+spans requires the original hashed tokenizer JSON. Outputs cannot reconstruct
+missing original PDFs or authenticate their contents.
+
+Stages write into a temporary directory, validate everything and rename a
+complete generation to its manifest SHA-256 name. A single atomic active-pointer
+replacement selects it. Default failures/interruption before selection leave
+the prior active dataset unchanged. Complete unselected generations or temporary
+files may remain after interruption; the loader never chooses them implicitly.
+This is not an fsync/power-loss durability, hostile-filesystem or multi-writer
+transaction protocol. Published generations must be treated as immutable.
+PR1/PR2 legacy output files are not replaced by the combined runner.
+
+`load_active_dataset` checks pointer/manifest schemas, artifact hashes/counts,
+source-hash requirements, coverage, original page metadata, span reconstruction,
+IDs and budgets. Every stored quality-report count and coverage declaration is
+checked against the records. Stable `source_failures` lists distinguish missing
+PDFs, parsing failures, no-text papers and absent standalone page records;
+runtime exception paths are not stored. Required dependency provenance is
+validated for each input mode. Local tokenizer assets are protected input paths
+and their hashes are rechecked before publication.
+Character profiles are regenerated to check exact configuration
+consistency. Token counts are checked against declared budgets; independent
+recounting requires the original tokenizer asset and is done during production
+and corpus verification, not by implicitly loading a model in the loader.
+Unsupported schemas, missing artifacts, inconsistent metadata or symlinked
+generation/artifact paths are rejected. Standalone pages mode verifies its page
+input hash; it does not claim to revalidate those pages against PDF contents.
+
 ## Retrieval handoff and next stages
 
 The versioned `paper_id` follows the `id` convention in Matias's
@@ -264,8 +363,11 @@ The versioned `paper_id` follows the `id` convention in Matias's
 indexes titles and abstracts; it remains separate from this fixed-manifest
 implementation. No CSV adapter or combined retrieval workflow is included.
 
-A third PR will consume these pages and create chunks with source citation
-metadata. Later integration should agree on the corpus
+PR3 consumes these pages and creates chunks with source citation metadata.
+`load_passages(run_root, pointer_path, paper_ids=...)` returns validated chunks
+filtered by canonical paper IDs; it does not embed, search, or change Chroma.
+The read-only `coverage --metadata-csv PATH` command compares included IDs with
+his CSV's `id` column. Later integration should agree on the corpus
 and bridge this manifest to Matias's CSV rather than maintaining two competing
 paper collections. This stage does not collect abstracts or categories for his
 index; those fields would need to come from his metadata or a future adapter.
@@ -279,7 +381,7 @@ and last pages confirms title/body/reference/appendix text is present, not that
 every PDF element is accurate. The original PDF remains authoritative.
 
 There is no retry framework, scheduled collection, latest-paper search,
-chunking, CSV adapter, passage index, embeddings, generation, UI, or retrieval
+CSV conversion adapter, passage index, embeddings, generation, UI, or retrieval
 evaluation here. Identifier compatibility with Matias is not a tested retrieval
 integration. These results establish data preparation, not research answer
 quality.

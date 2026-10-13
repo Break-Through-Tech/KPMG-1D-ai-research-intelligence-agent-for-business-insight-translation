@@ -22,13 +22,15 @@
 - Fixed manifest for the five supplied research PDFs and validated citation metadata.
 - Reproducible paper ingestion with explicit arXiv collection and offline tests.
 - Page-by-page PDF extraction with original page citations and conservative cleanup.
+- Three deterministic page-local chunking profiles, exact source offsets, and
+  hash-verified datasets selected through an atomic active pointer.
 
 ---
 
 ## 👩🏽‍💻 **Setup and Installation**
 
-The current implementation validates a fixed paper manifest, prepares a paper
-catalog, and extracts citation-preserving PDF pages. Use Python 3.11 or newer
+The current implementation validates a fixed paper manifest, extracts
+citation-preserving PDF pages, and prepares reconstructable passages. Use Python 3.11 or newer
 and run from the repository root:
 
 ```bash
@@ -37,6 +39,8 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 PYTHONPATH=src python -m research_pipeline.ingestion_cli ingest
 PYTHONPATH=src python -m research_pipeline.extraction_cli
+PYTHONPATH=src python -m research_pipeline.cli run
+PYTHONPATH=src python -m research_pipeline.cli inspect
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
@@ -63,7 +67,24 @@ See [the pipeline guide](docs/pipeline.md) for commands, data contracts,
 validation, PDF limitations, and the proposed handoff to retrieval work.
 See [the PR 2 review fixes](docs/pr2_review_fixes.md) for the audit corrections
 and the extraction comparison after the dependency upgrade.
-Chunking, embeddings, and generation remain follow-up work.
+The combined `run` command leaves those legacy catalog/page files untouched.
+It publishes complete generations under `data/processed/runs/<manifest-hash>/`
+and selects one through `data/processed/active_run.json`. Consumers must use the
+validating loader, not assume the newest directory is active. Run `chunk` to
+consume existing pages without reparsing PDFs. Processing codes remain 0/2/3;
+partial publication requires `--allow-partial`.
+
+The default `boundary_characters` profile uses up to 1,800 characters with
+200-character overlap; `--profile fixed_characters` is the comparison baseline.
+Optional `--profile tokenizer` requires installing `requirements-tokenizers.txt`
+and explicitly providing a local tokenizer JSON, model ID and revision. It uses
+actual tokenizer counts, not a characters-per-token estimate, and does not
+download assets or run an embedding model. See [the guide](docs/pipeline.md).
+
+See [PR3 verification](docs/pr3_validation.md) and
+[the future evaluation plan](docs/chunking_evaluation_plan.md).
+Embeddings, retrieval integration, evaluation execution and generation remain
+follow-up work; prepared passages support Task #1 but do not complete it.
 
 ---
 

@@ -1,0 +1,2 @@
+# Optional local-tokenizer chunking only; no embedding-model weights are required.
+tokenizers==0.23.2
