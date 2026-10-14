@@ -11,8 +11,9 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 class RetrievalConfig:
     """Retrieval data locations resolved relative to the repository checkout."""
     repository_root: Path = REPOSITORY_ROOT
-    downloaded_directory: Path = Path("data/downloaded")
-    metadata_path: Path = Path("data/downloaded/metadata.csv")
+    downloaded_directory: Path = Path("data/Retrieve_Papers")
+    manifest_path: Path = Path("data/manifest/papers.json")
+    pages_path: Path = Path("data/manifest/pages.jsonl")    # page text written by research_pipeline
     arxiv_query: str = "cat:cs.AI"      # Which arXiv papers to download 
     arxiv_delay_seconds: float = 3.0    #mandatory by api rules
 

@@ -12,8 +12,8 @@ class NotebookConfig:
     """Notebook data locations resolved relative to the repository checkout."""
 
     repository_root: Path = REPOSITORY_ROOT
-    downloaded_directory: Path = Path("data/downloaded")
-    metadata_path: Path = Path("data/downloaded/metadata.csv")
+    downloaded_directory: Path = Path("data/Retrieve_Papers")
+    manifest_path: Path = Path("data/manifest/papers.json")
     chroma_directory: Path = Path("data/chroma")
 
     # Which arXiv papers to download and the pause between API calls

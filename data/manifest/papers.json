@@ -15,7 +15,12 @@
     ],
     "published": "2026-08-21",
     "pdf_url": "https://arxiv.org/pdf/2608.20316v1",
-    "source_path": "data/2608.20316v1_Pandora's AI Model Routing Box Efficient Allocation with Costly Value Estimation.pdf"
+    "source_path": "data/Retrieve_Papers/2608.20316v1.pdf",
+    "categories": [
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2608.20316v1",
+    "abstract": "Heterogeneous AI systems composed of multiple models, architectures, harnesses, or inference-time settings can improve quality and efficiency by routing queries to the specialist who can answer most effectively at the lowest cost. Routing requires estimating each specialist's expected return, but this value estimation has a cost. Cheap estimators (e.g., embedding-based predictors) are fast but noisy, while accurate estimators (e.g., fine-tuned models with access to retrieval results or partial reasoning traces) are expensive. We formalize this tradeoff as an instance of Pandora's Box, the classical problem of optimal search with costly inspection. Under a Gaussian signal model, the resulting policies have closed-form value-of-information expressions that determine, for each specialist and input, whether refining the value estimate is worth its cost. We call the centralized policy Pandora's Router. We extend this to a decentralized setting, Pandora's Bidder, where specialists independently decide whether to invest in self-assessment before accepting an offered price to claim a query. Experiments across three domains---a standard multi-LLM benchmark, retrieval-augmented specialists, and LLMs with variable inference-time reasoning---show that Pandora's Router matches the routing quality of exhaustive estimation, while querying the expensive estimator far less often. In the decentralized setting, value-of-information reasoning improves allocative efficiency when competing estimates are accurate; when competing estimates are noisy, however, it can increase the strategic specialist's utility at the expense of others."
   },
   {
     "paper_id": "2608.20318v1",
@@ -35,7 +40,14 @@
     ],
     "published": "2026-08-21",
     "pdf_url": "https://arxiv.org/pdf/2608.20318v1",
-    "source_path": "data/2608.20318v1_AI4AI-Bench Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Imp.pdf"
+    "source_path": "data/Retrieve_Papers/2608.20318v1.pdf",
+    "categories": [
+      "cs.AI",
+      "cs.CL",
+      "cs.LG"
+    ],
+    "url": "http://arxiv.org/abs/2608.20318v1",
+    "abstract": "Recursive self-improvement (RSI) asks whether an AI system can improve the process that produces AI systems, so that the next system inherits the improvement. That process is the training algorithm: a better objective or update rule improves the compute\\mbox{-}capability exchange rate for every subsequent run, including the one that produces the next agent. Whether RSI is feasible therefore turns on whether an agent can design training algorithms. No benchmark isolates that ability: existing suites are won by collecting data or by tuning hyperparameters, and none tells a change to how a run is executed apart from a change to how the model learns. We present AI4AI\\mbox{-}Bench, 10 frozen research repositories spanning 10 training algorithm families. In each task, an agent has 4 hours on one B300 to rewrite the training algorithm; its code is then rerun from scratch for up to 12 hours and scored by a fixed evaluator hidden from the agent, against the repository's original algorithm under the same procedure. Because the 10 metrics are incommensurable, every task is mapped onto one scale on which $0$ is an uninformative model, $0.1$ is the algorithm the repository ships, and $1.0$ is the task optimum. Across 29 configurations of 6 systems on all 10 tasks the mean score is $0.166$, and the best system reaches $0.250$: even the strongest closes under a fifth of the distance between the algorithm that was already there and the optimum. The submissions show where that distance went: most never change how the model learns at all, and the minority that do average $0.226$ against $0.126$ for the rest. More reasoning effort mostly buys the willingness to go there, taking that minority from $8\\%$ of submissions to $64\\%$ and the mean score from $0.094$ to $0.196$. We release the task suite, the evaluators and every scored submission, so that the measurement can be repeated as these systems change."
   },
   {
     "paper_id": "2608.20319v1",
@@ -49,7 +61,13 @@
     ],
     "published": "2026-08-21",
     "pdf_url": "https://arxiv.org/pdf/2608.20319v1",
-    "source_path": "data/2608.20319v1_Inducing Task Models from Computer-Use Traces.pdf"
+    "source_path": "data/Retrieve_Papers/2608.20319v1.pdf",
+    "categories": [
+      "cs.CL",
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2608.20319v1",
+    "abstract": "Naturalistic computer-use traces, passively recorded screenshots and mouse or keyboard actions, are a valuable resource for deriving symbolic, auditable, and reusable models of how everyday work is done. Such models matter as computer-use agents enter real work, where agents need to learn how tasks are actually performed, and organizations need to audit and reuse that knowledge. However, inducing such task models is challenging, as activity is observed only as low-level events and real-world work is multi-threaded with interleaved goals. Existing methods assume a given task or a single workflow, and produce step-level summaries rather than structured task models. We introduce Task Model Induction (TMI), which (i) discovers the latent tasks in an unconstrained trace, disentangling concurrent activity, and (ii) for each latent task, induces a task model pairing a hierarchical objective model of recursive goal decomposition with a procedure model of the control flow that organized the execution. Intrinsically, on controlled human and agent trajectories, TMI recovers interleaved tasks with 0.974 agreement against ground-truth groupings and reconstructs 74.9% of the observed execution steps, far more than the strongest workflow induction baseline. Extrinsically, skills derived from TMI's task models improve held-out task accuracy by 30.0% over the strongest baseline."
   },
   {
     "paper_id": "2608.20320v1",
@@ -64,7 +82,13 @@
     ],
     "published": "2026-08-21",
     "pdf_url": "https://arxiv.org/pdf/2608.20320v1",
-    "source_path": "data/2608.20320v1_An Agentic Approach for Active Data Collection, Travel Behavior Modeling, and We.pdf"
+    "source_path": "data/Retrieve_Papers/2608.20320v1.pdf",
+    "categories": [
+      "cs.AI",
+      "cs.CL"
+    ],
+    "url": "http://arxiv.org/abs/2608.20320v1",
+    "abstract": "Travel behavior research increasingly combines digital data collection with predictive modeling, yet these stages are often developed and evaluated separately. This study proposes a three-agent workflow integrating conversational data collection, structured data processing, and behavioral prediction. A chatbot-administered, image-augmented stated-preference survey collected mode choices from student commuters across five predefined weather scenarios, yielding 454 respondent-scenario observations. Weather-related associations were analyzed using a multinomial logit model, while logistic regression and random forest provided machine-learning benchmarks. Nine locally deployed large language models (LLMs), ranging from 2 to 35 billion parameters, were evaluated across four zero-shot prompt-and-context conditions and extended through persona, few-shot, and vision-based configurations. Random forest achieved 69.6% five-class accuracy, while the best text-only zero-shot LLM reached 69.9% without task-specific fitting. Habitual travel information produced the most consistent gains, Expert framing generally outperformed Role-Play, and persona information was most useful when habitual travel information was unavailable. Few-shot prompting improved prediction for several models, with gains stabilizing after a small number of examples. Using the same weather images shown to respondents, the best vision-based configuration reached 71.5% five-class accuracy, indicating that visual context may provide additional predictive information for selected models. Overall, the study shows how conversational surveys, structured data processing, conventional behavioral modeling, machine learning, and multimodal LLM prediction can be coordinated within an auditable multi-agent workflow."
   },
   {
     "paper_id": "2608.20331v1",
@@ -80,6 +104,568 @@
     ],
     "published": "2026-08-21",
     "pdf_url": "https://arxiv.org/pdf/2608.20331v1",
-    "source_path": "data/2608.20331v1_G-CARL Grounded Checklist-Aligned Reward Learning for Patient-Oriented Medical R.pdf"
+    "source_path": "data/Retrieve_Papers/2608.20331v1.pdf",
+    "categories": [
+      "cs.CL",
+      "cs.AI",
+      "cs.CV"
+    ],
+    "url": "http://arxiv.org/abs/2608.20331v1",
+    "abstract": "Personalized interpretation of medical reports has emerged as an increasingly important need among patients. Addressing this need requires both evidence-grounded medical factuality and context-dependent patient communication, yet existing medical vision-language tasks do not adequately capture these dual requirements. To bridge this gap, we introduce Patient-oriented Medical Report Interpretation (PMRI), a novel open-ended multimodal generation task that requires models to explain medical reports in accurate and accessible language based on a user's query and dialogue history. These two objectives differ fundamentally in their verifiability, yet remain tightly coupled, making them difficult to optimize jointly under conventional supervised fine-tuning and holistic reinforcement learning paradigms. To address this challenge, we propose G-CARL, a grounded, checklist-aligned reinforcement learning framework that combines multi-source retrieval for atomic claim verification with context-aware, instance-specific weighted checklists for response coverage, providing structured supervision for factuality, user-demand satisfaction, and expression quality without constraining response diversity. We further construct MMedReport, a real-world PMRI benchmark, along with a clinician-designed three-dimensional evaluation protocol. Extensive experiments demonstrate that G-CARL consistently outperforms existing post-training baselines in overall quality, claim-level precision, and checklist recall. Pairwise preference evaluation by clinicians further confirms that G-CARL produces interpretations that are more accurate and better aligned with patient needs."
+  },
+  {
+    "paper_id": "2609.35732v1",
+    "paper_version": "v1",
+    "title": "Failure-Transparent Agents: Benchmarking Post-Failure Reporting in Tool-Using Language Models",
+    "authors": [
+      "Junru Zhu",
+      "Shiming Xie",
+      "Aime Lu Fan Chen",
+      "Xiaoqing Ding",
+      "Chunxin Tang",
+      "Ruoyu Qi",
+      "Yulang Fei"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35732v1",
+    "source_path": "data/Retrieve_Papers/2609.35732v1.pdf",
+    "categories": [
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2609.35732v1",
+    "abstract": "Tool-using agents can fail twice: a required tool can fail, and the agent can then report success without the evidence needed to justify it. Existing benchmarks often entangle this reporting failure with tool selection, recovery, and environment dynamics. We introduce Failure-Transparent Agents (FTA), a controlled benchmark that fixes the failed observation and required evidence state before generation, making post-failure claims directly auditable. FTA contains 100 tasks with deterministic failure traces spanning five failure families, a neutral control, and four user-pressure conditions, and evaluates unsupported claims alongside useful recovery. Across six models, three response policies, and 3,600 human-annotated responses, false-success rates are 22.8% under the baseline policy, 9.3% with a transparency instruction, and 0.8% with a structured evidence contract. Fabricated-detail rates decrease from 28.3% to 14.3% and 0.8%, while useful responses increase from 74.9% to 89.2% and 98.8%, respectively. The tested evidence-contract policy is associated with substantially lower post-failure reporting errors while useful-response rates remain high within this blocked-task benchmark."
+  },
+  {
+    "paper_id": "2609.35741v1",
+    "paper_version": "v1",
+    "title": "Shockingly Simple Self-retrospection Improves Agentic Models Without RL",
+    "authors": [
+      "Jonathan Light",
+      "Christopher Zhang Cui",
+      "Jeonghye Kim",
+      "Roger Creus Castanyer",
+      "Emiliano Penaloza",
+      "Zhengyan Shi",
+      "Alessandro Sordoni",
+      "Marc-Alexandre Côté",
+      "Xingdi Yuan",
+      "Minseon Kim"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35741v1",
+    "source_path": "data/Retrieve_Papers/2609.35741v1.pdf",
+    "categories": [
+      "cs.AI",
+      "cs.CL"
+    ],
+    "url": "http://arxiv.org/abs/2609.35741v1",
+    "abstract": "People learn not only by repeating successful actions, but also by recounting and explaining their experiences, revising their understanding to guide future behavior. Can a language-model agent improve its future actions by training only on explanations of its own experience? We investigate this question by studying Retrospection-Only Fine-Tuning (ROFT), a minimal online procedure designed to isolate the effect of explanation-only training on subsequent behavior. The agent attempts a task, observes available feedback, generates a retrospective explanation, and is fine-tuned with a next-token prediction loss on the explanation tokens alone. The procedure uses neither an external teacher nor a reward-based policy update. In software-engineering experiments with Qwen3.5-4B, ROFT is trained on problems with mixed successful and unsuccessful base-model attempts. On held-out SWE-bench Verified and Pro, it reaches 49.2% and 26.8% solve rates after 20 updates without using a verifier, compared with GRPO's 48.0% and 25.3% after 40 updates in the evaluated runs, and makes faster early progress in training time and sampled attempts. It also learns to solve individual tasks on which all 64 sampled base-model attempts failed, showing that learning can begin without any initially successful trajectories. Behavioral analyses find that ROFT indirectly assigns credit to actions, encouraging good actions and discouraging incorrect ones. Moreover, prompting retrospections to emphasize more direct solutions yields shorter subsequent attempts even without an explicit length penalty. Together, these findings show that learning to explain can also improve learning to do, establishing self-generated retrospections as useful training targets and motivating further study of explanation-to-action transfer."
+  },
+  {
+    "paper_id": "2609.35744v1",
+    "paper_version": "v1",
+    "title": "FinAutoRubric: Expert-Guided Automatic Rubric Generation for Evaluating Financial Research Agents",
+    "authors": [
+      "Hoyoung Lee",
+      "Suyeol Yun",
+      "Jack Haverty",
+      "Yunju Cho",
+      "Meesong Kim",
+      "Daekyung Park",
+      "Sumin Kim",
+      "Jihoon Kwon",
+      "Jasmine Jia Geng",
+      "Andrew Chin",
+      "Yin Luo",
+      "Edward Tong",
+      "Yu Yu",
+      "Zach Golkhou",
+      "Minkyu Kim",
+      "Igor Halperin",
+      "Young Cha",
+      "Alejandro Lopez-Lira",
+      "Chanyeol Choi",
+      "Yongjae Lee"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35744v1",
+    "source_path": "data/Retrieve_Papers/2609.35744v1.pdf",
+    "categories": [
+      "cs.AI",
+      "q-fin.CP"
+    ],
+    "url": "http://arxiv.org/abs/2609.35744v1",
+    "abstract": "Evaluating finance research agents requires rubrics that reflect expert standards and fix the values correct as of an information cutoff. Expert-reviewed finance benchmarks rely on fixed, per-item rubrics, which are costly to extend and cannot encode each institution's own standard. In FinAutoRubric, experts specify reusable evaluation guidance, while agents and code carry out query-specific rubric generation, review, and validation. This expert guidance governs every agent, as prompts and as rules that code enforces, and a Task Bank of reusable criteria carries it across tasks. In long-horizon loops that follow the expert guidance, a writer agent researches every expected value and a reviewer agent verifies it, and failures escalate to a human. On three expert-authored finance benchmarks, its rubrics track expert scoring as closely as the strongest evaluated generator while stating the expert rubric's expected value for more criteria, their scores agree with human grading, and in-house analysts prefer them in a blind review. The released 100-query FinAutoRubric Benchmark, built from in-house analysts' key questions across 78 tasks and eight asset classes, shows that rubrics from an earlier model generation still leave headroom for a later one."
+  },
+  {
+    "paper_id": "2609.35745v1",
+    "paper_version": "v1",
+    "title": "Copy the Same, Distill the Difference: Initializing Linear Vision Transformers",
+    "authors": [
+      "Huaiyuan Qin",
+      "Muli Yang",
+      "Gabriel James Goenawan",
+      "Shiqi Huang",
+      "Min Kass Chong",
+      "Wahyu Wiratama",
+      "Peng Hu",
+      "Chen Gong",
+      "Wu Liu",
+      "Xi Peng",
+      "Chun Jian Ho",
+      "Hongyuan Zhu"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35745v1",
+    "source_path": "data/Retrieve_Papers/2609.35745v1.pdf",
+    "categories": [
+      "cs.CV",
+      "cs.AI",
+      "cs.LG"
+    ],
+    "url": "http://arxiv.org/abs/2609.35745v1",
+    "abstract": "Linear Vision Transformers (ViTs) are designed to replace the attention in Softmax ViTs with the linear-complexity attention operator for more efficient token routing, but they require from-scratch pre-training and typically underperform the original Softmax version. How to initialize linear ViTs both efficiently and effectively still remains unclear. In this work, we explicitly ask: given that most foundation ViTs are built on the mainstream Softmax attention, can linear ViTs benefit from their pre-trained weights? Recent works on Attention Transfer show that attention is the effective transferable component between Softmax ViTs, suggesting attention alone suffices for such reuse. However, we find the opposite for Softmax-to-linear transfer. The attention weights are operator-specific: copying them barely helps, and is sometimes even worse than random initialization. Instead, the attention's token routing behavior can be recovered through distillation with a proper loss design, letting linear ViTs reduce the gap and even match Softmax ones. In contrast, the MLP weights, which carry the learned representation, are operator-agnostic: they can be transferred by simple direct copying, which already carries most of the benefit of the pre-trained weights. Thus, copying MLPs can serve as an effective foundation for Softmax-to-linear transfer: paired with the distilled attention, linear ViTs eventually close the remaining gap and even surpass Softmax ones. These findings hold consistently across various linear ViT variants, different model sizes, and diverse datasets. We hope this study deepens the understanding of reusing pre-trained weights across attention operators: copy what stays the same and distill what differs, to recover the benefit across the Softmax-to-linear boundary."
+  },
+  {
+    "paper_id": "2609.35750v1",
+    "paper_version": "v1",
+    "title": "KV-streams for Efficient Compaction in Agentic Reinforcement Learning",
+    "authors": [
+      "Emiliano Penaloza",
+      "Dane Malenfant",
+      "Dheeraj Vattikonda",
+      "Roger Creus Castanyer",
+      "Siddarth Venkatraman",
+      "Abhay Puri",
+      "Jonathan Light",
+      "Matthew James Sargent",
+      "Augustine N. Mavor-Parker",
+      "Massimo Caccia",
+      "Lucas Caccia",
+      "Glen Berseth",
+      "Esmeralda S. Whitammer",
+      "Alessandro Sordoni",
+      "Minseon Kim",
+      "Marc-Alexandre Côté",
+      "Laurent Charlin",
+      "Guillaume Lajoie"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35750v1",
+    "source_path": "data/Retrieve_Papers/2609.35750v1.pdf",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2609.35750v1",
+    "abstract": "Scaling the horizon of agentic LLMs is bottlenecked by the need to fit ever longer context traces in GPU memory. Context compaction has been the most popular mechanism to alleviate this issue, keeping GPU memory constant for a given trace. Unfortunately, most compaction strategies rely on prefilling the LLM context many times over, hindering training throughput. To alleviate this bottleneck and enable efficient trainable compaction, we propose KV-streams, a plug-and-play strategy compatible with any compaction strategy that substantially increases throughput while showing no evidence of hindering performance. KV-streams enable scalable compaction by streaming the KV cache forward rather than flushing it after each compaction. We show that KV-streams enable three different compaction strategies, achieving a 2.6 to 5x wall-clock speedup in training. Beyond efficiency, we find that the streamed KV cache can act as a recurrent state, carrying forward information that has long since disappeared from the context. Specifically, in a controlled setting we show that, contrary to prior work, RL alone is all that is needed for this behavior to emerge. Overall, we show KV-streams to be an efficient and lightweight plug-and-play addition to any post-training pipeline."
+  },
+  {
+    "paper_id": "2609.35751v1",
+    "paper_version": "v1",
+    "title": "How to Loop MoE: Flatten the Experts, Untie the Attention",
+    "authors": [
+      "Shouren Wang",
+      "Chuang Ma",
+      "Mohsen Hariri",
+      "Debargha Ganguly",
+      "Wang Yang",
+      "Xiaoqing Tong",
+      "Qianying Liu",
+      "Xiaotian Han",
+      "Vipin Chaudhary"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35751v1",
+    "source_path": "data/Retrieve_Papers/2609.35751v1.pdf",
+    "categories": [
+      "cs.LG",
+      "cs.AI",
+      "cs.CL"
+    ],
+    "url": "http://arxiv.org/abs/2609.35751v1",
+    "abstract": "Looped Transformers reuse one block of layers several times: by spending extra computation they push a model of fixed size further, and so use its parameters more fully; while sparse mixture-of-experts (MoE) models activate only a few of many experts for each token. Looped MoE bridges these two design philosophies and gives MoE models new potential for better expert usage, but it raises a question: how to loop a MoE? We answer it with Foil. With the expert parameters and the expert compute per token held fixed, Foil (1) flattens the experts, halving the expert layers, doubling the experts per layer and doubling the passes, so that every routing decision chooses from a larger pool, and (2) unties the attention, giving each pass its own attention parameters while the experts and routers stay shared. Experiments show that Foil clearly outperforms the unflattened looped baseline: at 20B tokens every Foil model has lower pretraining loss than the baseline; at 100B tokens the loss improves monotonically with the degree of flattening, the most flattened Foil ending 0.012 nat below the baseline at equal parameters and compute, with downstream accuracy on par or better; untying the attention also yields more balanced and more confident routing at equal shape. Our ablations analyse why Foil works and turn the findings into design guidance for looped MoE: the returns of looping and of widening the expert layers amplify each other, routing confidence tracks healthy expert use better than load balance, and a sparse looped MoE should therefore use more experts per layer and more passes. Code and configurations are available at https://github.com/SR-A-W/how-to-loop-moe."
+  },
+  {
+    "paper_id": "2609.35760v1",
+    "paper_version": "v1",
+    "title": "TokenCast: Forecasting Token Consumption During LLM Agent Execution",
+    "authors": [
+      "Chaoqian Ouyang",
+      "Ling Yue",
+      "Libin Zheng",
+      "Huanghui Guo",
+      "Shengxiang Xu",
+      "YiShu Wang",
+      "Ran Li",
+      "Jian Yin",
+      "Shaowu Pan",
+      "Shimin Di"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35760v1",
+    "source_path": "data/Retrieve_Papers/2609.35760v1.pdf",
+    "categories": [
+      "cs.LG",
+      "cs.AI",
+      "cs.SE"
+    ],
+    "url": "http://arxiv.org/abs/2609.35760v1",
+    "abstract": "When a large language model (LLM) agent executes the same task, token consumption can vary by over an order of magnitude across runs. The agent chooses its next steps based on tool feedback and intermediate results, while the growing context steadily inflates the input size of every subsequent call. The total consumption of a task is therefore hard to predict before execution and the prediction must be revised as the run unfolds. In this paper, we propose TokenCast, which learns a composable cost representation for each execution segment, recording its own consumption and the context growth it introduces. Composing adjacent segments yields a cumulative estimate that captures the extra input cost incurred when context from earlier segments is re-read by every later call. As execution unfolds, newly observed evidence refreshes the forecast, requiring no additional LLM calls and incurring a mean cumulative prediction time of 32.8 ms per run on SWE-bench Verified. Across 4 task suites and 6 agent models, TokenCast's mean absolute error reduction against the strongest comparator averages 14.5% over 96 evaluated combinations. In offline budget-control replay, TokenCast uses 21.3% fewer tokens on average than a fixed-budget policy at matched trace completion. The code is available at https://github.com/DEFENSE-SEU/TokenCast."
+  },
+  {
+    "paper_id": "2609.35767v1",
+    "paper_version": "v1",
+    "title": "Learning Native Reflection in Unified Models with Interleaved Reinforcement Learning",
+    "authors": [
+      "Yijia Fan",
+      "Ziqi Huang",
+      "Zhongang Cai",
+      "Yan Li",
+      "Zimo Wen",
+      "Wanqi Yin",
+      "Haiwen Diao",
+      "Ziwei Liu"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35767v1",
+    "source_path": "data/Retrieve_Papers/2609.35767v1.pdf",
+    "categories": [
+      "cs.CV",
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2609.35767v1",
+    "abstract": "Unified multimodal models can both look at and render images, so in principle they can repair their own generations: diagnose what an image gets wrong, revise it, observe the result, and diagnose again. Whether a revision helps is known only after it is rendered, so the reflection text and the image generation must be learned jointly, over the whole loop. Supervised fine-tuning (SFT) on reflection trajectories gives a cold start but does not find the high-success repair paths, and naive RL that optimizes only the renderer or only one head leaves most of the gain untapped. We introduce UMM-Reflection, which applies reinforcement learning (RL) to complete reflection trajectories inside one unified model: sibling trajectories share one initial image, so the group-relative advantage compares reflection strategies, and one trajectory-level advantage updates both the reflection tokens and the flow-based revisions, avoiding the combinatorial blow-up of per-round credit assignment. Unlike single-round editing or pipelines with an external critic, credit flows across rounds and to both roles of the same model, and no verifier is needed at inference. On BAGEL, UMM-Reflection improves GenEval by 12.05 points over SFT, and the gains transfer to WISE (+10.97), OneIG-Bench (+3.48), and T2I-CompBench++ (+4.63), none of which is used in training."
+  },
+  {
+    "paper_id": "2609.35769v1",
+    "paper_version": "v1",
+    "title": "Telescopic Language Models",
+    "authors": [
+      "Zhilin Guo",
+      "Boqiao Zhang",
+      "Hakan Aktas",
+      "Kyle Fogarty",
+      "Nursena Koprucu Aslan",
+      "Wenzhao Li",
+      "Canberk Baykal",
+      "Albert Miao",
+      "Siyu Hong",
+      "Yixiao Liu",
+      "Adam Wu",
+      "Ashish Kumar Singh",
+      "Sakar Khattar",
+      "Chenliang Zhou",
+      "Weihao Xia",
+      "Cristina Nader Vasconcelos",
+      "Cengiz Oztireli"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35769v1",
+    "source_path": "data/Retrieve_Papers/2609.35769v1.pdf",
+    "categories": [
+      "cs.CL",
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2609.35769v1",
+    "abstract": "One deployed language model must often serve many compute budgets, yet serving each budget still means a separate training or compression run per point. We train a Telescopic Language Model (TLM) to be that continuum: a nested-capacity Transformer supervised by stochastic prefix supervision with a full anchor. At every step, one randomly truncated prefix of the capacity axis is trained against the full next-token target, alongside one full-capacity pass, so the trained artifact is a valid language model at every depth. Two forward-backward passes per step, no architectural change, nothing extra at inference. Fixed-exit suites such as Matryoshka Language Model Suites (MLMS) occupy one point in this design space, and the point has a cost: supervising only a few fixed exits leaves the nested model at chance level everywhere else (perplexity 10^2-10^5 in our baselines). On a 200M proxy suite (20B FineWeb-Edu tokens, identical data stream for all methods), a single TLM run is a valid language model at every one of its twenty layer prefixes, in perplexity and on perplexity-sensitive downstream tasks, reducing the area under the quality-budget curve by 43-44% relative to the fixed-exit suites while matching them at full capacity, at ~12% lower GPU cost per run. The prefix sampling density is a dial: concentrating it on a few depths recovers fixed-exit quality there at the price of the continuum, so the operating points become a training-time choice rather than an architectural one. These results indicate that the training objective, not the nesting itself, is what makes a model elastic."
+  },
+  {
+    "paper_id": "2609.35770v1",
+    "paper_version": "v1",
+    "title": "FurE: Efficient Instance-Specific 3D Fur Reconstruction without Animal-Fur Datasets",
+    "authors": [
+      "Srinjay Sarkar",
+      "Prakhar Kaushik",
+      "Soumava Paul",
+      "Alan Yuille"
+    ],
+    "published": "2026-09-28",
+    "pdf_url": "https://arxiv.org/pdf/2609.35770v1",
+    "source_path": "data/Retrieve_Papers/2609.35770v1.pdf",
+    "categories": [
+      "cs.CV",
+      "cs.AI",
+      "cs.GR"
+    ],
+    "url": "http://arxiv.org/abs/2609.35770v1",
+    "abstract": "Realistic and editable animal fur reconstruction from multi-view images is challenging due to fine-scale detail, self-occlusion and obfuscation, and, unlike human hair, the lack of animal-fur datasets. Fur usually covers most of an animal's body, with large inter-species and intra-species variability. We present FurE, an efficient strand-based animal fur reconstruction method that recovers a per-strand, editable groom by optimizing a root-conditioned latent field, decoded into strand geometry via a PCA-based decoder. We reconstruct a defurred animal body using local fur-thickness cues from a surface-constrained Gaussian Frosting representation together with part-based priors. We further show that a PCA-based decoder learned from human-hair strand data can alleviate animal-data scarcity while enabling substantially faster optimization. FurE achieves a 10x speedup in strand training over current SOTA dense per-strand optimization while retaining strand fidelity and generalizing across synthetic and real-world sequences, with quantitative and qualitative validation despite the reduction in training time."
+  },
+  {
+    "paper_id": "2610.18842v1",
+    "paper_version": "v1",
+    "title": "Who Improves the Robot? Toward Physical Recursive Self-Improvement",
+    "authors": [
+      "Hai Zhou",
+      "Fan Yang",
+      "Zeyi Chen",
+      "Lejun Zhang",
+      "Chenyang Fu",
+      "Jianping Li",
+      "Jiayi Zhu",
+      "Xianyang Liu",
+      "Yingxuan Yang",
+      "Lili Meng",
+      "Lu Wang",
+      "Xinyang Han",
+      "Jiankai Sun",
+      "Weirui Ye",
+      "Guanchu Wang",
+      "Wanhua Li",
+      "Ming Zhou",
+      "Boyi Li",
+      "Ming Jin",
+      "Kun Shao",
+      "Muhao Chen",
+      "Guang Chen",
+      "Lei Ma",
+      "Joey Tianyi Zhou",
+      "Costas Spanos",
+      "Xia Hu",
+      "Mac Schwager",
+      "Weinan Zhang",
+      "Qian Feng",
+      "Shangding Gu"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18842v1",
+    "source_path": "data/Retrieve_Papers/2610.18842v1.pdf",
+    "categories": [
+      "cs.AI",
+      "cs.LG",
+      "cs.RO"
+    ],
+    "url": "http://arxiv.org/abs/2610.18842v1",
+    "abstract": "Robots are increasingly autonomous in task execution, yet their improvement remains largely human-driven. This study investigates Physical Recursive Self-Improvement (Physical RSI), in which physical experience guides lasting updates to both a robot's capabilities and its improvement procedure, making subsequent improvement more effective across tasks. Physical RSI faces challenges from noisy observations, continuous dynamics, costly trials, and irreversible consequences. We present an L0-L5 framework that differentiates capability-level from meta-level updates and within-task from across-task gains, reserving L5 for independently verified recursive gain. We study existing methods around harness adaptation and model training, alongside safety and control mechanisms that govern execution and successive updates. Our analysis reveals that, despite substantial progress in self-improvement, the surveyed literature does not yet demonstrate Physical RSI as defined by our framework. We identify research priorities in reliable feedback, causal attribution, safety preservation, and benchmarking, outlining a path toward robots that autonomously improve how they learn while ensuring safety. The GitHub repository for Physical RSI is available at https://github.com/SAIL-Research-Lab/Physical-RSI."
+  },
+  {
+    "paper_id": "2610.18843v1",
+    "paper_version": "v1",
+    "title": "LIBERO-RIG: A Hardware-Setup Robustness Benchmark for Vision-Language-Action Models",
+    "authors": [
+      "Andrea Yaoyun Cui",
+      "Hanyu Wang",
+      "Xinyi Wang",
+      "Bangzheng Li",
+      "Lin Zhang",
+      "Zhenggang Tang",
+      "Shyamal Buch",
+      "Dejia Xu",
+      "Matthew Tancik"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18843v1",
+    "source_path": "data/Retrieve_Papers/2610.18843v1.pdf",
+    "categories": [
+      "cs.RO",
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2610.18843v1",
+    "abstract": "Robot policies are expected to generalize across deployment environments, including variations in the robot itself: cameras are bumped and remounted, calibrations drift, controllers run at different rates, and end-effector pads wear down. We present LIBERO-RIG, a benchmark that perturbs only the robot's hardware and setup while holding every LIBERO task fixed. The benchmark spans eleven perturbation axes, including camera mounting and optics, camera-to-arm calibration, actuation gain, control rate, proprioceptive noise, base pose, table height, and gripper pads. Each axis has five severity levels, yielding 210 conditions across the four LIBERO suites. We evaluate nine recent vision-language-action models using 500 episodes per condition and substantiate each finding with rigorous statistical tests. Pooled success falls from 0.932 to 0.767 at the middle severity and 0.509 at the highest severity. Performance degradation varies substantially across perturbation axes and action interfaces, and training on visual perturbations does not mitigate faults that leave camera images unchanged. We release the benchmark together with manifests specifying the fixed perturbation parameters for each episode."
+  },
+  {
+    "paper_id": "2610.18851v1",
+    "paper_version": "v1",
+    "title": "MFG: Multi-turn Feedback Guided Molecular Optimization",
+    "authors": [
+      "Trieu Nguyen",
+      "Frazier N. Baker",
+      "Ruoxi Gao",
+      "Daniel Adu-Ampratwum",
+      "Xia Ning"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18851v1",
+    "source_path": "data/Retrieve_Papers/2610.18851v1.pdf",
+    "categories": [
+      "cs.AI",
+      "cs.LG",
+      "q-bio.QM"
+    ],
+    "url": "http://arxiv.org/abs/2610.18851v1",
+    "abstract": "Multi-objective molecular optimization is a critical process in drug discovery that aims to modify a given molecule to simultaneously improve multiple properties while maintaining a similar overall structure. This process often requires iterative modifications guided by computational or experimental feedback. Recent large language model (LLM)-based methods have begun to explore this iterative approach; however, these methods are not explicitly trained to leverage such feedback, while existing approaches primarily focus on single-turn molecular optimization. To address this gap, we introduce Multi-turn Feedback Guided (MFG) molecular optimization, a reinforcement learning framework that trains an LLM to progressively optimize molecules using feedback from previous turns. MFG introduces a feedback vector capturing both property improvements and source molecule similarity, alongside a feedback-aligned reward function that promotes progressive improvement across turns. We apply MFG over $\\text{GeLLM}^{3}\\text{O}$, a state-of-the-art LLM model for multi-objective molecular optimization, evaluate $\\text{GeLLM}^{3}\\text{O-MFG}$ on ten multi-objective molecular optimization tasks. The results demonstrate that $\\text{GeLLM}^{3}\\text{O-MFG}$ achieves the highest average similarity-constrained success rate ($81.50%$), outperforming the base model $\\text{GeLLM}^{3}\\text{O}$ ($70.81%$)."
+  },
+  {
+    "paper_id": "2610.18853v1",
+    "paper_version": "v1",
+    "title": "Two Clocks: Why Larger Rollout Batches Learn Slower but Fail on Schedule in Reinforcement Learning with Verifiable Rewards",
+    "authors": [
+      "Yuante Li",
+      "Junwei Quan",
+      "Kai Qiu",
+      "Kate Zhang",
+      "Yicheng Tao"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18853v1",
+    "source_path": "data/Retrieve_Papers/2610.18853v1.pdf",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2610.18853v1",
+    "abstract": "Reinforcement learning with verifiable rewards (RLVR) relies on costly model-generated responses, motivating larger rollout batches and square-root learning-rate scaling. Reported to approximately preserve progress per sample with one optimizer step per rollout, this rule is less understood in practical multi-step training. We develop a two-clock framework that separates the samples needed to make progress from those consumed before collapse. Under a local quadratic model, the square-root rule preserves first-order drift per sample but not progress: larger batches take fewer, longer updates and lose more to curvature, yielding a learning-rate-dependent critical batch beyond which sample efficiency degrades. A drift-threshold hypothesis predicts a complementary failure clock whose sample count remains approximately invariant along the square-root rule. Controlled GRPO experiments on Qwen2.5-Math-1.5B across a $16\\times$ batch range support both predictions. Ratio clipping delays failure, especially for larger batches, but the progress gap persists without it. Widening the clip trades stability for a transient speed gain. The progress gap reappears on another dataset, a general-purpose checkpoint, and a 7B model. Finally, we use the two-clock framework to derive a simple multi-step RLVR schedule: start below the critical batch and switch to a larger batch before failure. Our code is available at: https://github.com/WinstonLiyt/two-clocks-rlvr."
+  },
+  {
+    "paper_id": "2610.18860v1",
+    "paper_version": "v1",
+    "title": "AesCode: Aesthetic Code Generation with Decoupled Cross-Modal Rewards",
+    "authors": [
+      "Xin Gao",
+      "Yifan Yang",
+      "Xin Li",
+      "Pan Wang",
+      "Yan Li",
+      "Muzhao Tian",
+      "Mingxi Cheng",
+      "Bei Liu",
+      "Kai Qiu",
+      "Qi Dai",
+      "Dong Chen",
+      "Yue Dong",
+      "Leandros Tassiulas",
+      "Rex Ying",
+      "Ji Li",
+      "Chong Luo"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18860v1",
+    "source_path": "data/Retrieve_Papers/2610.18860v1.pdf",
+    "categories": [
+      "cs.AI"
+    ],
+    "url": "http://arxiv.org/abs/2610.18860v1",
+    "abstract": "Generating information-rich visual artifacts such as slides, posters, and dashboards as code is appealing because the outputs are structured, editable, and verifiable. Yet code models cannot see how their choices of layout and color come together on the canvas, often limiting spatial planning and aesthetic quality. Image generators excel at visual design but can misrender requested content, making their outputs unreliable targets for direct reproduction. We therefore introduce AesCode, which generates code grounded in the content prompt while using an image generated from the same prompt as an aesthetic guidance. To do so, AesCode represents the target as a design graph that describes the whole canvas and makes each property attributable. From this graph, we derive complementary cross-modal rewards: deterministic verifiers score properties parsable from code and rendering, while a VLM judge assesses the non-parsable ones with a sample-specific Visual Graph Rubric (VGR) tied to graph elements and relations. We optimize these decoupled rewards through reinforcement learning with per-channel normalization to jointly improve spatial planning, aesthetic quality, and verifiable correctness. To evaluate this setting, we build a benchmark that scores verifiable correctness and visual quality separately, with visual scores highly consistent with human judgments. We find that reference images substantially improve the visual quality of code generated by existing models, and ablations show that AesCode benefits from references both as model input and as a source of visual rewards. Relative to same-scale Qwen3-VL baselines given the same references, AesCode-8B and AesCode-32B improve visual quality by 31.1 and 22.4 percentage points, reaching scores comparable to those of closed-source frontier models such as GPT-5.5 and Claude Opus 4.8."
+  },
+  {
+    "paper_id": "2610.18861v1",
+    "paper_version": "v1",
+    "title": "Hybrid Reasoning Agents",
+    "authors": [
+      "Jiaru Zou",
+      "Yunzhe Qi",
+      "Sirui Chen",
+      "Federico Bianchi",
+      "Shang Zhu",
+      "Pan Lu",
+      "Jingrui He",
+      "James Zou"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18861v1",
+    "source_path": "data/Retrieve_Papers/2610.18861v1.pdf",
+    "categories": [
+      "cs.CL",
+      "cs.AI",
+      "cs.LG"
+    ],
+    "url": "http://arxiv.org/abs/2610.18861v1",
+    "abstract": "How can we build an agent that thinks beyond human language, yet still acts through it in the external environment? Modern LLM agents still reason and interact through text, while latent reasoning offers an efficient internal medium but lacks native tool access and reasoning transparency. We bridge these two directions with Hybrid Reasoning Agents (HybridAgents), which dynamically navigate between latent reasoning and text-based interaction throughout a unified generation process. Architecturally, a lightweight HybridLink enables seamless transitions between text and latent modes, while the agent's continuous working memory preserves lossless hybrid context across multiple turns. These designs preserve tool-integrated agentic capabilities while making latent thoughts directly inspectable. Building on this architecture, we further develop dedicated post-training algorithms for hybrid reasoning: HybridSFT stabilizes tool-integrated hybrid generation by teaching the backbone to coordinate with HybridLink, then HybridRL scales reasoning by learning when to think in latent space and when to act through text. We evaluate HybridAgent at 3 model scales across 11 benchmarks covering mathematics, science, medicine, search, and agentic reasoning. Compared with frontier LLM Agents and agentic frameworks spanning both text-based and latent methods, HybridAgent consistently improves performance by 10.4%, while delivering 35.5%-54.7% token reduction, 1.8x-2.6x faster inference, and 2.7x-3.7x cost savings. Code and data are available at https://github.com/togethercomputer/HybridAgent."
+  },
+  {
+    "paper_id": "2610.18862v1",
+    "paper_version": "v1",
+    "title": "DoubtLess: Training-Free Contrastive Decoding for Efficient Reasoning",
+    "authors": [
+      "Minghao Luo",
+      "Liang Chen"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18862v1",
+    "source_path": "data/Retrieve_Papers/2610.18862v1.pdf",
+    "categories": [
+      "cs.CL",
+      "cs.AI",
+      "cs.LG"
+    ],
+    "url": "http://arxiv.org/abs/2610.18862v1",
+    "abstract": "Reasoning models achieve strong performance through long chains of thought (CoT), but often spend more tokens than needed to solve a problem. Existing ways to shorten the CoT require additional training for each model, add a fixed steering vector to the model's hidden states, or use decoding heuristics such as stopping early or banning words like \"wait\", which can reduce accuracy. We propose DoubtLess, a training-free decoding method in which a much smaller reasoning model steers the large one towards brevity. The small model reads the large model's CoT so far twice, once prompted to be brief (the brief thinker) and once prompted to be verbose (the verbose thinker), and the difference between its two logit vectors, scaled by a strength, is added to the large model's logits at every step of the CoT. On seven benchmarks of competition mathematics, graduate-level science and competitive programming, DoubtLess shortens the CoT of Qwen3-32B by 31% with unchanged accuracy, outperforming five inference-time baselines. We also show that DoubtLess reduces thinking tokens per turn by 20% in a self-debugging coding agent with unchanged task performance. It also generalizes to two other model families with unchanged accuracy. When combined with training-based compression, it further shortens the CoT of a model already trained for brevity. Ablations and behavioral analysis show that DoubtLess reduces repeated checking, with most token savings coming after the correct answer first appears in the CoT. Our code is available at https://github.com/leoluolol/DoubtLess."
+  },
+  {
+    "paper_id": "2610.18868v1",
+    "paper_version": "v1",
+    "title": "Tev: Scaling Long-Horizon Agentic Environments with Dense Progress Rewards",
+    "authors": [
+      "Wenbo Hu",
+      "Shraman Pramanick",
+      "Krishna Kumar Singh",
+      "Nanyun Peng",
+      "Kai-Wei Chang",
+      "Yong Jae Lee"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18868v1",
+    "source_path": "data/Retrieve_Papers/2610.18868v1.pdf",
+    "categories": [
+      "cs.CL",
+      "cs.AI",
+      "cs.CV",
+      "cs.LG"
+    ],
+    "url": "http://arxiv.org/abs/2610.18868v1",
+    "abstract": "Long-horizon agents have drawn growing attention for their ability to work autonomously -- from hours to days -- on economically valuable tasks, a capability essential to automated discovery and recursive self-improvement (RSI). Yet open-source models still struggle on long-horizon tasks, largely for lack of both training data and a working recipe, and scaling both is hard: long, complex tasks are difficult to curate and verify, and their rewards are sparse. We address both. First, we introduce Tev-Gym, the first long-horizon agent training dataset with verifiable, dense, progressive rewards -- 1,170 verified task environments across 7 domains. It is built on a latent-world-first approach that first constructs a latent world: a complete and correct hidden specification of the task domain, workflow, and expected state after each step. Each task is then progressively rendered from this specification into an agent-facing environment, enabling controllable complexity and a natural progress metric. Second, we turn this metric into a training recipe: via progress-potential reward shaping (PPRS), we convert progress into a dense per-step reward that improves training efficiency and makes otherwise-intractable tasks trainable. Training with this recipe yields Tev-27B, which achieves substantial gains on the Agents' Last Exam computing and math sciences domains (ALE-CM), matching GPT-6 Astra and Claude Opus 5 at Pass@5. Despite training only on ALE-related data, it generalizes to the Terminal-Bench (TB) 3.0 and 4.0 subsets, surpassing GLM 5.2 and Gemini 3.7 Flash, and reaches Claude Opus 4.8-level performance on middle-horizon tasks such as TB 2.1."
+  },
+  {
+    "paper_id": "2610.18869v1",
+    "paper_version": "v1",
+    "title": "What Matters in Quality-Aware VLA Pretraining: A Benchmark and Empirical Study",
+    "authors": [
+      "Mingxuan Yan",
+      "Litian Gong",
+      "Dihong Huang",
+      "Zhixu Li",
+      "Tianyu Zhang",
+      "Wenqian Zhang",
+      "Hefeifei Jiang",
+      "Peihao Li",
+      "Jian Zhang",
+      "Mengfei Zhao",
+      "Yikai Tang",
+      "Hai Zhai",
+      "Zehao Wang",
+      "Ruijian Liang",
+      "Yanjia Huang",
+      "Lin Shao",
+      "Changliu Liu",
+      "Kaiyu Hang",
+      "Zhiwen Fan",
+      "Masayoshi Tomizuka",
+      "Jianfei Yang",
+      "Jiachen Li"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18869v1",
+    "source_path": "data/Retrieve_Papers/2610.18869v1.pdf",
+    "categories": [
+      "cs.RO",
+      "cs.AI",
+      "cs.LG"
+    ],
+    "url": "http://arxiv.org/abs/2610.18869v1",
+    "abstract": "How should demonstration quality be used during vision-language-action (VLA) pretraining to improve performance after target-task fine-tuning? We compare weighting, filtering, and conditioning across reward definitions and label granularities using 5,000 naturally suboptimal human demonstrations and 24 target tasks. Within each VLA, we match demonstrations and training budgets. Additional comparisons examine pretraining data size and the roles of quality tags during fine-tuning and inference. Across three VLAs, we find that approach-aware episode conditioning improves mean success over plain behavioral cloning; conditioning and filtering favor episode and chunk labels, respectively, on average, with model-dependent reversals; and constant-tag fine-tuning improves mean success after conditioned pretraining with either tagged or untagged inference. We introduce AXIS-Bench to support these controlled comparisons. Built on crowdsourced simulation demonstrations, it provides recorded object and contact states for recomputing quality labels on shared trajectories. Replayable trajectories support workspace-aligned rendering and user-defined real-world target tasks. In our real-world experiment, simulation pretraining raises success from 9.6\\% to 31.7\\%. Project page: https://axis-bench.github.io/."
+  },
+  {
+    "paper_id": "2610.18874v1",
+    "paper_version": "v1",
+    "title": "ChunkAct: Action Chunking for Agentic Robotics",
+    "authors": [
+      "Bingxin Xu",
+      "Wenrui Bao",
+      "Xinxin Liu",
+      "Jiawei Zhou",
+      "Yuzhang Shang",
+      "Emilio Ferrara"
+    ],
+    "published": "2026-10-13",
+    "pdf_url": "https://arxiv.org/pdf/2610.18874v1",
+    "source_path": "data/Retrieve_Papers/2610.18874v1.pdf",
+    "categories": [
+      "cs.RO",
+      "cs.AI",
+      "cs.CL",
+      "cs.CV"
+    ],
+    "url": "http://arxiv.org/abs/2610.18874v1",
+    "abstract": "Agentic robotics places a large language model (LLM) agent in the robot control loop, where it composes perception, motion, and vision-language-action (VLA) tools under the guidance of a memory and thereby generalizes to new tasks without retraining. This generality comes at a steep price in efficiency. Every primitive requires a round of LLM reasoning over the full interaction history, so the cost of an episode grows with the number of primitives. We find this reasoning largely redundant: once a sub-goal is chosen, its primitives follow a routine already prescribed by memory. We present ChunkAct, which introduces action chunking to agentic robotics. Online, a single call launches a chunk of chained primitives, which executes autonomously and returns control only upon failure. Offline, ChunkAct compiles the memory into these chunks, so execution is memory-free at test time and the planner is reserved for decisions that require reasoning. LLM computation therefore scales with the number of decisions rather than the number of primitives. On LIBERO-Pro, ChunkAct improves task success by 5.0 points over the state of the art in agentic robotics while requiring 2.9x fewer LLM calls, 4.4x fewer input tokens, and 2.3x fewer output tokens."
   }
 ]
