@@ -1,5 +1,7 @@
+anthropic
 arxiv
 chromadb
+python-dotenv
 sentence-transformers
 # Ingestion uses the standard library; page extraction needs pypdf.
 pypdf[fonts]==6.19.0
