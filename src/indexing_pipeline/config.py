@@ -13,16 +13,16 @@ class IndexingConfig:
 
     repository_root: Path = REPOSITORY_ROOT
     manifest_path: Path = Path("data/manifest/papers.json")
-    pages_path: Path = Path("data/manifest/pages.jsonl")
+    run_root: Path = Path("data/processed/runs")
+    active_pointer: Path = Path("data/processed/active_run.json")
     chroma_directory: Path = Path("data/chroma")
 
     # Embedding model and the ChromaDB collection with one entry per paper
     embedding_model: str = "all-MiniLM-L6-v2"
     papers_collection: str = "papers"
 
-    # ChromaDB collection with one entry per chunk of page text, and the chunk length in characters
+    # ChromaDB collection with one entry per validated passage
     chunks_collection: str = "chunks"
-    chunk_size: int = 1000
 
     def resolve(self, path: Path) -> Path:
         """Resolve a configured repository-relative path to an absolute path."""

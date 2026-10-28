@@ -1,0 +1,42 @@
+[
+  {
+    "id": "BQ-01",
+    "question": "When is it worth paying for a more accurate model-routing estimate instead of using a cheaper signal?",
+    "intent": "cost_and_routing"
+  },
+  {
+    "id": "BQ-02",
+    "question": "What should a financial services team check before trusting a research report produced by an AI agent?",
+    "intent": "financial_research_quality"
+  },
+  {
+    "id": "BQ-03",
+    "question": "How should a tool-using AI agent report a failed task so that a human reviewer can understand what went wrong?",
+    "intent": "agent_reliability"
+  },
+  {
+    "id": "BQ-04",
+    "question": "How could forecasting token use help an enterprise budget for long-running AI agent workflows?",
+    "intent": "agent_cost_forecasting"
+  },
+  {
+    "id": "BQ-05",
+    "question": "How can weather-sensitive travel demand forecasts inform which data an organization collects next?",
+    "intent": "operations_forecasting"
+  },
+  {
+    "id": "BQ-06",
+    "question": "What could computer-use traces reveal about a user's task, and what limits should a business consider?",
+    "intent": "task_modeling"
+  },
+  {
+    "id": "BQ-07",
+    "question": "How can a robotics team test whether a vision-language-action model works across different hardware setups?",
+    "intent": "model_robustness"
+  },
+  {
+    "id": "BQ-08",
+    "question": "What did KPMG's private 2026 AI deployment audit conclude about internal project costs?",
+    "intent": "out_of_corpus_abstention"
+  }
+]
