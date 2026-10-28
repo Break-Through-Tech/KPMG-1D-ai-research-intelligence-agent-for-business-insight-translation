@@ -97,7 +97,9 @@ PYTHONPATH=src python -m indexing_pipeline.indexing
 `src/initializer.py` refreshes recent arXiv pages, publishes a complete passage
 generation, and then indexes it. That interactive path uses the network and
 needs a local `ANTHROPIC_API_KEY` for answers. The indexer itself does not call
-an answer model. Run `PYTHONPATH=src python -m unittest tests.test_indexing_pipeline -v`
+an answer model. The index records an embedding fingerprint and rebuilds
+vectors when the embedding output changes; search rejects an index that has not
+been refreshed. Run `PYTHONPATH=src python -m unittest tests.test_indexing_pipeline -v`
 for offline indexing checks without embedding model weights.
 
 See [PR3 verification](docs/pr3_validation.md) and

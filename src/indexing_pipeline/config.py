@@ -21,7 +21,7 @@ class IndexingConfig:
     embedding_model: str = "all-MiniLM-L6-v2"
     papers_collection: str = "papers"
 
-    # ChromaDB collection with one entry per chunk of page text, and the chunk length in characters
+    # ChromaDB collection with one entry per validated passage
     chunks_collection: str = "chunks"
 
     def resolve(self, path: Path) -> Path:

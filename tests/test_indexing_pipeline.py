@@ -33,6 +33,16 @@ class DeterministicEmbedding:
         return "deterministic-test"
 
 
+class ChangedEmbedding(DeterministicEmbedding):
+    def __call__(self, input):
+        return [[99.0, float(len(text)), 1.0] for text in input]
+
+
+class SmallerEmbedding(DeterministicEmbedding):
+    def __call__(self, input):
+        return [[float(len(text)), 1.0] for text in input]
+
+
 class IndexingPipelineTests(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
@@ -103,6 +113,31 @@ class IndexingPipelineTests(unittest.TestCase):
         dataset = load_active_dataset(self.root / "data/processed/runs", pointer)
         self.assertEqual(set(indexer.chunks.get()["ids"]), {chunk.chunk_id for chunk in dataset.chunks})
         self.assertEqual(indexer.papers.count(), 1)
+
+    def test_embedding_change_requires_reindex_and_rebuilds_vectors(self):
+        self.indexer.index_papers()
+        self.indexer.index_chunks()
+        before = self.indexer.papers.get(include=["embeddings"])["embeddings"][0].tolist()
+        changed = PaperIndexer(self.config, embedding_function=ChangedEmbedding())
+        with self.assertRaises(RuntimeError):
+            changed.search_two_stage("abc", n_papers=1, k=1)
+        self.assertEqual(changed.index_papers(), 1)
+        self.assertEqual(changed.index_chunks(), 2)
+        after = changed.papers.get(include=["embeddings"])["embeddings"][0].tolist()
+        self.assertNotEqual(before, after)
+        self.assertEqual(len(changed.search_two_stage("abc", n_papers=1, k=1)), 1)
+
+    def test_embedding_dimension_change_rebuilds_collections(self):
+        self.indexer.index_papers()
+        self.indexer.index_chunks()
+        changed = PaperIndexer(self.config, embedding_function=SmallerEmbedding())
+        with self.assertRaises(RuntimeError):
+            changed.search_two_stage("abc", n_papers=1, k=1)
+        self.assertEqual(changed.index_papers(), 1)
+        self.assertEqual(changed.index_chunks(), 2)
+        self.assertEqual(len(changed.papers.get(include=["embeddings"])["embeddings"][0]), 2)
+        self.assertEqual(len(changed.chunks.get(include=["embeddings"])["embeddings"][0]), 2)
+        self.assertEqual(len(changed.search_two_stage("abc", n_papers=1, k=1)), 1)
 
     def test_missing_active_dataset_fails_before_creating_vector_database(self):
         pointer = self.root / "data/processed/active_run.json"

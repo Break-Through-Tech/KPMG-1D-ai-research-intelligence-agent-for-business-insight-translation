@@ -6,7 +6,7 @@ import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
 from indexing_pipeline.config import IndexingConfig
-from research_pipeline.chunking import sha256_bytes
+from research_pipeline.chunking import canonical_hash, sha256_bytes
 from research_pipeline.datasets import load_active_dataset
 from research_pipeline.models import PaperMetadata
 
@@ -23,6 +23,13 @@ class PaperIndexer:
         self._source()
         self.embed_fn = (embedding_function if embedding_function is not None else
                          SentenceTransformerEmbeddingFunction(model_name=config.embedding_model))
+        probe = self.embed_fn(input=["validated-passage-index-embedding-probe-v1"])[0]
+        self.embedding_dimensions = len(probe)
+        self.embedding_fingerprint = canonical_hash({
+            "model": config.embedding_model,
+            "function": type(self.embed_fn).__module__ + "." + type(self.embed_fn).__qualname__,
+            "probe": [float(value) for value in probe],
+        })
         self.db = chromadb.PersistentClient(path=str(self.chroma_dir))
         self.papers = self.db.get_or_create_collection(
             config.papers_collection, embedding_function=self.embed_fn, configuration={"hnsw": {"space": "cosine"}}
@@ -54,6 +61,17 @@ class PaperIndexer:
                 raise ValueError(f"missing URL for indexed paper: {paper_id}")
         return dataset, by_id
 
+    def _ensure_dimensions(self, collection):
+        """Recreate a collection when the current embedder changes vector size."""
+        stored = collection.get(limit=1, include=["embeddings"])["embeddings"]
+        if stored is not None and len(stored) and len(stored[0]) != self.embedding_dimensions:
+            name = collection.name
+            self.db.delete_collection(name)
+            return self.db.get_or_create_collection(
+                name, embedding_function=self.embed_fn, configuration={"hnsw": {"space": "cosine"}}
+            )
+        return collection
+
     @staticmethod
     def _reconcile(collection, desired):
         """Upsert changed records and delete vectors absent from the selected corpus."""
@@ -80,7 +98,10 @@ class PaperIndexer:
             row = by_id[paper_id]
             desired[paper_id] = (f"{row['title']}. {row['abstract']}",
                                  {"paper_id": paper_id, "title": row["title"], "url": row["url"],
-                                  "published": row["published"], "generation": generation})
+                                  "published": row["published"], "generation": generation,
+                                  "embedding_model": self.config.embedding_model,
+                                  "embedding_fingerprint": self.embedding_fingerprint})
+        self.papers = self._ensure_dimensions(self.papers)
         return self._reconcile(self.papers, desired)
 
     def index_chunks(self):
@@ -93,13 +114,17 @@ class PaperIndexer:
             "page_text_sha256": chunk.page_text_sha256,
             "chunking_profile_sha256": chunk.chunking_profile_sha256,
             "title": chunk.title, "pdf_url": chunk.pdf_url, "generation": generation,
+            "embedding_model": self.config.embedding_model,
+            "embedding_fingerprint": self.embedding_fingerprint,
         }) for chunk in dataset.chunks}
+        self.chunks = self._ensure_dimensions(self.chunks)
         return self._reconcile(self.chunks, desired)
 
-    @staticmethod
-    def _require_ids(collection, expected, generation, name):
-        actual = set(collection.get(where={"generation": generation}, include=[])["ids"])
-        if actual != set(expected):
+    def _require_ids(self, collection, expected, generation, name):
+        stored = collection.get(where={"generation": generation}, include=["metadatas"])
+        actual = set(stored["ids"])
+        if actual != set(expected) or any(metadata.get("embedding_fingerprint") !=
+                                          self.embedding_fingerprint for metadata in stored["metadatas"]):
             raise RuntimeError(f"{name} index is not synchronized with the active generation")
 
     def _search_papers(self, question, k, dataset):

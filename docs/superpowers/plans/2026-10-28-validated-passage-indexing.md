@@ -22,6 +22,7 @@
 - Repeated indexing and changed generation must not leave stale vectors.
 - Blank pages or partial generations must not enter the index.
 - Two-stage candidate filtering must return only active paper IDs.
+- An embedding-function change must not leave old vectors searchable.
 
 ---
 
@@ -51,8 +52,9 @@
 
 ## Verification record
 
-- Offline suite: 112 tests passed on the feature branch.
+- Offline suite: 114 tests passed on the feature branch.
 - Active corpus: 25 papers, 663 pages, 1,774 verified passages.
 - Full-corpus deterministic embedding index: 25 papers and 1,774 passages indexed in a temporary Chroma database.
 - MiniLM index command: first run updated 25 paper and 1,774 passage vectors; an offline rerun updated zero of each.
 - Question set: eight unique candidate prompts, not yet human labeled or scored.
+- Review fix: same-dimension and different-dimension embedding changes fail before reindex, then rebuild vectors and pass offline regression tests.
