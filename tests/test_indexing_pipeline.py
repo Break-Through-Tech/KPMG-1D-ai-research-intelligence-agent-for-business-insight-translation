@@ -76,6 +76,8 @@ class IndexingPipelineTests(unittest.TestCase):
         self.assertIn(passages[0]["chunk_id"], stored["ids"])
         self.assertIn("start_character", passages[0])
         self.assertIn("end_character", passages[0])
+        self.assertEqual(passages[0]["pdf_url"], dataset.chunks[0].pdf_url)
+        self.assertEqual(passages[0]["page_text_sha256"], dataset.chunks[0].page_text_sha256)
 
     def test_changed_active_generation_removes_old_vectors(self):
         self.indexer.index_papers()

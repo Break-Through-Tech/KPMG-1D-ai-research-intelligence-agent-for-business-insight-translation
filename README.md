@@ -18,18 +18,20 @@
 
 ## 🎯 **Project Highlights**
 
-- Fixed manifest for the five supplied research PDFs and validated citation metadata.
+- Versioned manifest for 25 tracked research PDFs and validated citation metadata.
 - Reproducible paper ingestion with explicit arXiv collection and offline tests.
 - Page-by-page PDF extraction with original page citations and conservative cleanup.
 - Three deterministic page-local chunking profiles, exact source offsets, and
   hash-verified datasets selected through an atomic active pointer.
+- Two-stage paper and passage indexing over the selected validated dataset.
 
 ---
 
 ## 👩🏽‍💻 **Setup and Installation**
 
 The current implementation validates a fixed paper manifest, extracts
-citation-preserving PDF pages, and prepares reconstructable passages. Use Python 3.11 or newer
+citation-preserving PDF pages, prepares reconstructable passages, and indexes
+the selected passage generation for two-stage search. Use Python 3.11 or newer
 and run from the repository root:
 
 ```bash
@@ -40,30 +42,33 @@ PYTHONPATH=src python -m research_pipeline.ingestion_cli ingest
 PYTHONPATH=src python -m research_pipeline.extraction_cli
 PYTHONPATH=src python -m research_pipeline.cli run
 PYTHONPATH=src python -m research_pipeline.cli inspect
+PYTHONPATH=src python -m indexing_pipeline.indexing
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
 Ingestion uses the standard library; extraction uses patched `pypdf[fonts]==6.19.0`
 and pinned `fonttools==4.66.1` for embedded font decoding.
-The default commands use the five supplied PDFs without network access.
+The preparation commands use the 25 tracked PDFs without network access. Indexing
+may download the configured embedding model on its first run.
 Ingestion writes `data/processed/papers.jsonl`; extraction writes
 `data/processed/pages.jsonl`. Complete runs publish staged output. Partial or
 failed extraction preserves previous pages by default; `--allow-partial`
 explicitly allows usable incomplete output but still returns exit code 2.
 Total failure returns 3 and never publishes.
 
-The independently tested ingestion/extraction boundary passes 55 offline tests.
-The supplied corpus produces 104 pages and 373,976 cleaned characters from 5/5
-papers, with valid citation metadata and byte-identical repeated outputs.
+The original five-paper ingestion/extraction fixture produced 104 pages and
+373,976 cleaned characters. The current committed manifest contains 25 papers
+and 663 page records; the validated character-profile run produced 1,774
+passages, with no excluded papers.
 Validation rejects mismatched paper/version URLs and shared PDF locations;
 downloads publish atomically and failed temporary writes are cleaned up.
 
-Generated catalogs and newly downloaded PDFs are ignored by Git; the supplied
-PDFs remain tracked in their original locations. Optional collection accepts
+Generated catalogs and newly downloaded PDFs are ignored by Git; the current
+25-paper corpus is tracked under `data/Retrieve_Papers/`. Optional collection accepts
 explicit versioned arXiv IDs and downloads PDFs only when requested.
 
 See [the pipeline guide](docs/pipeline.md) for commands, data contracts,
-validation, PDF limitations, and the proposed handoff to retrieval work.
+validation, PDF limitations, and the original passage handoff.
 See [the PR 2 review fixes](docs/pr2_review_fixes.md) for the audit corrections
 and the extraction comparison after the dependency upgrade.
 The combined `run` command leaves those legacy catalog/page files untouched.
@@ -80,10 +85,27 @@ and explicitly providing a local tokenizer JSON, model ID and revision. It uses
 actual tokenizer counts, not a characters-per-token estimate, and does not
 download assets or run an embedding model. See [the guide](docs/pipeline.md).
 
+To index the committed 25-paper page snapshot without reparsing PDFs, first
+publish its validated passage generation, then run the indexer:
+
+```bash
+PYTHONPATH=src python -m research_pipeline.cli chunk --pages data/manifest/pages.jsonl
+PYTHONPATH=src python -m research_pipeline.cli inspect
+PYTHONPATH=src python -m indexing_pipeline.indexing
+```
+
+`src/initializer.py` refreshes recent arXiv pages, publishes a complete passage
+generation, and then indexes it. That interactive path uses the network and
+needs a local `ANTHROPIC_API_KEY` for answers. The indexer itself does not call
+an answer model. Run `PYTHONPATH=src python -m unittest tests.test_indexing_pipeline -v`
+for offline indexing checks without embedding model weights.
+
 See [PR3 verification](docs/pr3_validation.md) and
-[the future evaluation plan](docs/chunking_evaluation_plan.md).
-Embeddings, retrieval integration, evaluation execution and generation remain
-follow-up work; prepared passages support Task #1 but do not complete it.
+[the evaluation plan](docs/chunking_evaluation_plan.md).
+The indexer now consumes the active validated passage generation, including
+its stable chunk IDs and source offsets. Retrieval quality, citation support,
+and generated answer quality still need evaluation. Candidate questions live in
+[`evaluation/benchmark_questions.json`](evaluation/benchmark_questions.json).
 
 ---
 

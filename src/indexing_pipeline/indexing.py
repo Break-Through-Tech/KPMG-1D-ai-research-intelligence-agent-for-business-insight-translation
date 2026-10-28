@@ -133,7 +133,9 @@ class PaperIndexer:
         return [{"chunk_id": identifier, "paper_id": metadata["paper_id"],
                  "page_number": metadata["page_number"],
                  "start_character": metadata["start_character"],
-                 "end_character": metadata["end_character"], "text": document,
+                 "end_character": metadata["end_character"],
+                 "pdf_url": metadata["pdf_url"],
+                 "page_text_sha256": metadata["page_text_sha256"], "text": document,
                  "score": round(1 - distance, 3)} for identifier, metadata, document, distance in zip(
                      result["ids"][0], result["metadatas"][0], result["documents"][0],
                      result["distances"][0])]
