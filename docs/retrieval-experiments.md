@@ -45,7 +45,9 @@ PYTHONPATH=src .venv/bin/python -m retrieval_experiments \
 The command prints one compact JSON record per question. The Python API returns
 the complete original passage dictionaries for citation inspection. The CLI
 uses the configured `PaperIndexer` and requires its matching embedding model
-and synchronized active index; it does not build or mutate that index.
+and synchronized active index. It does not synchronize vectors. Constructing
+`PaperIndexer` may create empty Chroma collections if the configured index is
+absent, after which search will reject the unsynchronized index.
 
 For the offline checks:
 
