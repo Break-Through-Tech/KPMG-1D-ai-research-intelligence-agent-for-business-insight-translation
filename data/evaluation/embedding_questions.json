@@ -1,0 +1,42 @@
+[
+  {
+    "id": "routing-cost",
+    "question": "How can an AI system route queries across different models while reducing the cost of value estimation?",
+    "relevant_papers": ["2608.20316v1"]
+  },
+  {
+    "id": "agent-failure-reporting",
+    "question": "How should tool-using language models report failures transparently after an unsuccessful action?",
+    "relevant_papers": ["2609.35732v1"]
+  },
+  {
+    "id": "financial-agent-evaluation",
+    "question": "How can expert-guided rubrics be generated automatically to evaluate financial research agents?",
+    "relevant_papers": ["2609.35744v1"]
+  },
+  {
+    "id": "token-forecasting",
+    "question": "How can token consumption be forecast during the execution of an LLM agent?",
+    "relevant_papers": ["2609.35760v1"]
+  },
+  {
+    "id": "efficient-reasoning",
+    "question": "How can reasoning be made more efficient without retraining a language model?",
+    "relevant_papers": ["2610.18862v1"]
+  },
+  {
+    "id": "hybrid-agents",
+    "question": "What is a hybrid reasoning agent and how does it combine different reasoning modes?",
+    "relevant_papers": ["2610.18861v1"]
+  },
+  {
+    "id": "robot-self-improvement",
+    "question": "How can robots improve their own capabilities through physical recursive self-improvement?",
+    "relevant_papers": ["2610.18842v1"]
+  },
+  {
+    "id": "action-chunking",
+    "question": "How does action chunking improve long-horizon agentic robotics?",
+    "relevant_papers": ["2610.18874v1"]
+  }
+]
