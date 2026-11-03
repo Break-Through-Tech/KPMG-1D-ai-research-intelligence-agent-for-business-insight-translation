@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Functionality · KPMG AI Research Intelligence</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="db-page">
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <img class="logo" src="kpmg-logo.png" alt="KPMG">
+        <span class="divider" aria-hidden="true"></span>
+        <span class="product">AI Research Intelligence</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#how" class="nav-link">How it works</a>
+        <a href="functionality.html" class="nav-link active" aria-current="page">Functionality</a>
+        <a href="database.html" class="nav-link">Database Monitor</a>
+        <a href="index.html" class="btn btn-header">Ask KAI</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="db-band">
+    <div class="db-band-inner">
+      <div>
+        <p class="eyebrow">Functionality</p>
+        <h1>From question to report</h1>
+        <p class="db-lede">A sample of what KAI returns: a structured report, a confidence score, and the passages it used.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="monitor">
+
+    <!-- The question -->
+    <section class="ask-card card">
+      <div class="asker" aria-hidden="true">ME</div>
+      <div class="ask-body">
+        <p class="label">Your question</p>
+        <p class="ask-text">What are the risks of deploying AI agents?</p>
+        <p class="ask-context"><span>Why I'm asking</span>Preparing a client briefing for a bank that wants to use AI agents in its research team.</p>
+        <p class="ask-meta">Asked today, 10:42 · searched 25 papers · 3 passages used</p>
+      </div>
+    </section>
+
+    <div class="fn-grid">
+
+      <!-- ===== Report ===== -->
+      <article class="card report">
+
+        <header class="report-head">
+          <div class="report-title">
+            <span class="kai-dot" aria-hidden="true">
+              <svg viewBox="0 0 40 40"><path d="M10 13 l-3 -9 9 6 z M30 13 l3 -9 -9 6 z" fill="#1e49e2"/><circle cx="20" cy="22" r="15" fill="#1e49e2"/><circle cx="14" cy="19" r="5.5" fill="#fff" stroke="#0c233c" stroke-width="1.5"/><circle cx="26" cy="19" r="5.5" fill="#fff" stroke="#0c233c" stroke-width="1.5"/><circle cx="15" cy="20" r="2.5" fill="#0c233c"/><circle cx="25" cy="20" r="2.5" fill="#0c233c"/><path d="M20 25 l2 3 -2 3 -2 -3 z" fill="#00b8f5"/></svg>
+            </span>
+            <div>
+              <p class="label">KAI report</p>
+              <h2>Risks of deploying AI agents</h2>
+            </div>
+          </div>
+
+          <div class="confidence" style="--score: 74">
+            <div class="gauge"><span>74%</span></div>
+            <div>
+              <p class="confidence-label">Confidence</p>
+              <p class="confidence-level">Medium–high</p>
+            </div>
+          </div>
+        </header>
+
+        <div class="summary">
+          <p class="label">Summary</p>
+          <p>
+            Recent research points to three practical risks. Agents can misreport what happened
+            after a tool fails <a class="cite" href="#e1">1</a>, their costs are hard to predict
+            before they run <a class="cite" href="#e2">2</a>, and their output is hard to judge
+            without expert-defined standards <a class="cite" href="#e3">3</a>.
+          </p>
+        </div>
+
+        <div class="sections">
+
+          <details open>
+            <summary>
+              <span>Key findings</span>
+              <span class="count">3</span>
+            </summary>
+            <ul class="findings">
+              <li>
+                <h4>Agents may report results they never saw</h4>
+                <p>When a tool fails, an agent can still claim success, for example saying
+                  “the tests pass” after the test runner crashed. Researchers call the needed
+                  property <em>failure transparency</em>. <a class="cite" href="#e1">1</a></p>
+              </li>
+              <li>
+                <h4>The same task can cost 10× more from one run to the next</h4>
+                <p>Token use varies by over an order of magnitude across runs of the same task,
+                  so cost forecasts must be updated while the agent is running.
+                  <a class="cite" href="#e2">2</a></p>
+              </li>
+              <li>
+                <h4>Quality checks need expert standards</h4>
+                <p>Evaluating finance research agents works best with rubrics set by experts,
+                  a reviewer agent that checks the work, and escalation to a human when checks
+                  fail. <a class="cite" href="#e3">3</a></p>
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>
+              <span>What this means for the business</span>
+              <span class="count">4</span>
+            </summary>
+            <ul class="bullets">
+              <li>Require agents to state which steps failed and what evidence they actually have before results are used. <a class="cite" href="#e1">1</a></li>
+              <li>Budget agent work as a range with mid-run checkpoints rather than a fixed price per task. <a class="cite" href="#e2">2</a></li>
+              <li>Define review criteria with domain experts and keep a human in the loop for anything client-facing. <a class="cite" href="#e3">3</a></li>
+              <li><strong>For your bank briefing:</strong> lead with the finance-specific evidence. Expert-set rubrics and human escalation are already being tested for financial research agents. <a class="cite" href="#e3">3</a></li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>
+              <span>Limitations</span>
+              <span class="count">3</span>
+            </summary>
+            <ul class="bullets">
+              <li>Findings come from research benchmarks, not enterprise deployments.</li>
+              <li>Only 3 relevant papers were found, all published Aug–Oct 2026.</li>
+              <li>No passages covered security, privacy or regulatory risk, so those are not addressed here.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>
+              <span>Suggested next steps</span>
+              <span class="count">2</span>
+            </summary>
+            <ul class="bullets">
+              <li>Review the cited passages before sharing this report.</li>
+              <li>Ask a follow-up on security and data-privacy risks to fill the gap above.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>
+              <span>How confident is KAI?</span>
+              <span class="count">74%</span>
+            </summary>
+            <dl class="conf-bars">
+              <div>
+                <dt>Source relevance</dt>
+                <dd><span class="bar" style="--v: 66"></span><span class="num">0.66</span></dd>
+              </div>
+              <div>
+                <dt>Agreement between sources</dt>
+                <dd><span class="bar" style="--v: 85"></span><span class="num">High</span></dd>
+              </div>
+              <div>
+                <dt>Coverage of the question</dt>
+                <dd><span class="bar" style="--v: 60"></span><span class="num">Partial</span></dd>
+              </div>
+            </dl>
+            <p class="conf-note">Every claim is backed by a retrieved passage. Coverage is partial because no passage addressed security or privacy.</p>
+          </details>
+
+        </div>
+      </article>
+
+      <!-- ===== Embeddings ===== -->
+      <aside class="card embeds">
+        <header class="card-head">
+          <p class="label">Embeddings</p>
+          <h2>Passages KAI used</h2>
+          <p class="card-sub">Ranked by how closely their meaning matches your question.</p>
+        </header>
+
+        <div class="embed-list">
+
+          <article class="embed" id="e1">
+            <div class="embed-top">
+              <span class="rank">1</span>
+              <span class="match"><span class="bar" style="--v: 78"></span>0.78 match</span>
+            </div>
+            <h3>Failure-Transparent Agents: Benchmarking Post-Failure Reporting in Tool-Using Language Models</h3>
+            <p class="embed-meta mono">2609.35732v1 · page 1 · passage 2 of 20</p>
+            <p class="embed-preview">“A tool call may fail, and the model may then compound that failure by reporting an outcome that was never observed.”</p>
+            <details class="embed-full">
+              <summary>Show full passage</summary>
+              <p>high within this blocked-task benchmark. Index Terms—LLM agents, tool failure, benchmark, failure transparency, hallucination 1. INTRODUCTION Tool-using language models can fail in two distinct ways. A tool call may fail, and the model may then compound that failure by reporting an outcome that was never observed. Concretely, a browser timeout does not justify “I verified the page,” a missing attachment does not justify a description of its contents, and a crashed test runner does not justify “the tests pass.” As language-model agents increasingly browse the web, inspect files, execute code, and interact with application APIs [1–9], reliable agent behavior requires more than task completion: when completion is blocked, the final response must faithfully represent the evidence actually available. We call this property failure transparency. Existing work addresses neighboring aspects of agent reliability but does not cleanly isolate post-failure reporting.</p>
+            </details>
+            <p class="used-in">Used in: Summary · Key findings · Business</p>
+          </article>
+
+          <article class="embed" id="e2">
+            <div class="embed-top">
+              <span class="rank">2</span>
+              <span class="match"><span class="bar" style="--v: 64"></span>0.64 match</span>
+            </div>
+            <h3>TokenCast: Forecasting Token Consumption During LLM Agent Execution</h3>
+            <p class="embed-meta mono">2609.35760v1 · page 1 · passage 1 of 88</p>
+            <p class="embed-preview">“When a large language model (LLM) agent executes the same task, token consumption can vary by over an order of magnitude across runs.”</p>
+            <details class="embed-full">
+              <summary>Show full passage</summary>
+              <p>When a large language model (LLM) agent executes the same task, token consumption can vary by over an order of magnitude across runs. The agent chooses its next steps based on tool feedback and intermediate results, while the growing context steadily inflates the input size of every subsequent call. The total consumption of a task is therefore hard to predict before execution and the prediction must be revised as the run unfolds. In this paper, we propose TokenCast, which learns a composable cost representation for each execution segment, recording its own consumption and the context growth it introduces. As execution unfolds, newly observed evidence refreshes the forecast, requiring no additional LLM calls and incurring a mean cumulative prediction time of 32.8 ms per run on SWE-bench Verified. Across 4 task suites and 6 agent models, TokenCast’s mean absolute error reduction against the strongest comparator averages 14.5%.</p>
+            </details>
+            <p class="used-in">Used in: Summary · Key findings · Business</p>
+          </article>
+
+          <article class="embed" id="e3">
+            <div class="embed-top">
+              <span class="rank">3</span>
+              <span class="match"><span class="bar" style="--v: 59"></span>0.59 match</span>
+            </div>
+            <h3>FinAutoRubric: Expert-Guided Automatic Rubric Generation for Evaluating Financial Research Agents</h3>
+            <p class="embed-meta mono">2609.35744v1 · page 1 · passage 1 of 109</p>
+            <p class="embed-preview">“A writer agent researches every expected value and a reviewer agent verifies it, and failures escalate to a human.”</p>
+            <details class="embed-full">
+              <summary>Show full passage</summary>
+              <p>Evaluating finance research agents requires rubrics that reflect expert standards and fix the values correct as of an information cutoff. Expert-reviewed finance benchmarks rely on fixed, per-item rubrics, which are costly to extend and cannot encode each institution’s own standard. In FinAutoRubric, experts specify reusable evaluation guidance, while agents and code carry out query-specific rubric generation, review, and validation. This expert guidance governs every agent, as prompts and as rules that code enforces, and a Task Bank of reusable criteria carries it across tasks. In long-horizon loops that follow the expert guidance, a writer agent researches every expected value and a reviewer agent verifies it, and failures escalate to a human.</p>
+            </details>
+            <p class="used-in">Used in: Summary · Key findings · Business</p>
+          </article>
+
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+</body>
+</html>
