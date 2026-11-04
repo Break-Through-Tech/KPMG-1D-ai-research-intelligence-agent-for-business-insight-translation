@@ -1,0 +1,42 @@
+[
+  {
+    "id": "BQ-01",
+    "question": "In plain language, what does the research say about how and why tool-using agents fail?",
+    "intent": "agent_failure_modes"
+  },
+  {
+    "id": "BQ-02",
+    "question": "Which papers are most relevant to a bank considering AI agents to draft equity research, and why?",
+    "intent": "paper_discovery_finance"
+  },
+  {
+    "id": "BQ-03",
+    "question": "What limitations do the authors report for LLM-generated financial research?",
+    "intent": "financial_limitations"
+  },
+  {
+    "id": "BQ-04",
+    "question": "Compare the approaches the papers take to choosing between cheaper and more capable models. What are the trade-offs?",
+    "intent": "routing_comparison"
+  },
+  {
+    "id": "BQ-05",
+    "question": "What data should a travel company collect first to improve its demand forecasts, according to the research?",
+    "intent": "forecasting_data_strategy"
+  },
+  {
+    "id": "BQ-06",
+    "question": "What privacy and consent risks come from recording how people use computer-use agents?",
+    "intent": "privacy_risk"
+  },
+  {
+    "id": "BQ-07",
+    "question": "What does the research suggest about transferring robot policies between robot platforms, and what should a manufacturer ask vendors?",
+    "intent": "robotics_vendor_diligence"
+  },
+  {
+    "id": "BQ-08",
+    "question": "Which single paper should a partner read first to understand agent reliability, and how would you explain it to a non-technical client in three sentences?",
+    "intent": "exec_summary"
+  }
+]
