@@ -170,6 +170,13 @@ class PaperIndexer:
         dataset, _ = self._source()
         return self._search_chunks(question, paper_ids, k, dataset)
 
+    def search_paper(self, question, paper_id, k=5):
+        """Search one article from the validated active corpus."""
+        dataset, _ = self._source()
+        if paper_id not in dataset.manifest["included_paper_ids"]:
+            raise ValueError(f"paper {paper_id} is not in the active index")
+        return self._search_chunks(question, [paper_id], k, dataset)
+
     def search_two_stage(self, question, n_papers=10, k=5):
         """Select papers then retrieve their active, citation-bearing passages."""
         dataset, _ = self._source()
