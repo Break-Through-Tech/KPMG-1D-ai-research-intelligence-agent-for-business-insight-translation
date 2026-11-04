@@ -4,8 +4,8 @@ Run from the repository root:  python src/initializer.py
 Needs ANTHROPIC_API_KEY in .env (copy .env.example) for the answering step.
 """
 
-import anthropic
 from dotenv import load_dotenv
+from answer_pipeline import run_workflow
 from indexing_pipeline.config import IndexingConfig
 from indexing_pipeline.indexing import PaperIndexer
 from research_pipeline.config import PipelineConfig
@@ -43,23 +43,9 @@ def initialize(n_papers=10, retrieval_config=None, embedding_function=None):
 
 
 def answer(indexer, question, client=None, k=5):
-    """Answer the question using only the k best passages, citing them as [paper_id p.page].
-    Returns (answer text, the passages the embedding search retrieved, each with its similarity score)."""
-    print("Searching the embeddings for relevant passages...", flush=True)
-    passages = indexer.search_two_stage(question, k=k)
-    if not passages:
-        return "No relevant passages found.", []
-    print(f"Asking Claude with {len(passages)} passage(s)...", flush=True)
-    context ="\n\n".join(f"[{p['paper_id']} p.{p['page_number']}]\n{p['text']}" for p in passages)
-    response = (client or anthropic.Anthropic()).messages.create(
-        model="claude-haiku-5-5",
-        max_tokens=16000,
-        system="Answer the question for a business reader using only the passages given consicely. "
-               "Cite each claim as [paper_id p.page]. If the passages don't answer it, say so.",
-               
-        messages=[{"role": "user", "content": f"Passages:\n\n{context}\n\nQuestion: {question}"}],
-    )
-    return "".join(block.text for block in response.content if block.type == "text"), passages
+    """Compatibility wrapper for interactive users of the original entry point."""
+    result = run_workflow(indexer, question, client=client, k=k)
+    return result["summary"], result["passages"]
 
 
 if __name__ == "__main__":
