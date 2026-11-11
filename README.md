@@ -6,7 +6,7 @@
 
 | Name                   | GitHub Handle | Contribution                                                             |
 |------------------------|---------------|--------------------------------------------------------------------------|
-| Bhoomi Patni           | @bhoomipatni  |                                                                          |
+| Bhoomi Patni           | @bhoomipatni  | Researched, compared, and evaluated multiple embedding models to identify the most suitable option for our RAG pipeline, providing a data-driven rationale for the final model selection|
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @b1wilks             |                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
