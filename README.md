@@ -12,7 +12,7 @@
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
 | Matias Freire          | @MatiasPF1       |                                                                          |
 | Chaitanya Raj Shah     | @cr-shah      |  Research data pipeline and citation-aware indexing                          |
-| Madison Lizbinski      | @Madisonlizbinski   |                                                                          |
+| Madison Lizbinski      | @Madisonlizbinski   |  Prompts                                                                        |
 
 ---
 
