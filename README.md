@@ -8,7 +8,7 @@
 |------------------------|---------------|--------------------------------------------------------------------------|
 | Bhoomi Patni           | @bhoomipatni  |                                                                          |
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
-| Brianna Wilkins        | @b1wilks             |                                                                          |
+| Brianna Wilkins        | @b1wilks             | Benchmark Questions                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
 | Matias Freire          | @MatiasPF1       |                                                                          |
 | Chaitanya Raj Shah     | @cr-shah      |                                                                          |
