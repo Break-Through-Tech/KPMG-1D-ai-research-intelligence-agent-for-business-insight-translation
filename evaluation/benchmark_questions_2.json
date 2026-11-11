@@ -1,0 +1,526 @@
+[
+  {
+    "id": "BQ-01",
+    "question": "When is it worth paying for a more accurate model-routing estimate instead of using a cheaper signal?",
+    "intent": "cost_and_routing",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2608.20316v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2608.20316v1",
+        "page": 1,
+        "text": "Cheap estimators (e.g., embedding-based predictors) are fast but noisy, while accurate estimators (e.g., fine-tuned models with access to retrieval results or partial reasoning traces) are expensive."
+      },
+      {
+        "paper_id": "2608.20316v1",
+        "page": 1,
+        "text": "closed-form value-of-information expressions that determine, for each specialist and input, whether refining the value estimate is worth its cost"
+      }
+    ],
+    "must_include": [
+      "Cheap estimators are fast but noisy; accurate ones cost more",
+      "Pay for the better estimate when its value of information exceeds its cost",
+      "Names the approach (Pandora's Router)"
+    ]
+  },
+  {
+    "id": "BQ-02",
+    "question": "What should a financial services team check before trusting a research report produced by an AI agent?",
+    "intent": "financial_research_quality",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2609.35744v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2609.35744v1",
+        "page": 1,
+        "text": "a writer agent researches every expected value and a reviewer agent verifies it, and failures escalate to a human"
+      },
+      {
+        "paper_id": "2609.35744v1",
+        "page": 1,
+        "text": "fix the values correct as of an information cutoff"
+      },
+      {
+        "paper_id": "2609.35744v1",
+        "page": 22,
+        "text": "Method, assumptions, and limitations transparency. Material methods, definitions, assumptions, input bases, and limitations must be visible enough to evaluate the result."
+      }
+    ],
+    "must_include": [
+      "Check key numbers against sources, as of a stated date",
+      "Have the agent's claims independently reviewed, with escalation to a human when verification fails",
+      "Check that methods, assumptions and limitations are visible"
+    ]
+  },
+  {
+    "id": "BQ-03",
+    "question": "How should a tool-using AI agent report a failed task so that a human reviewer can understand what went wrong?",
+    "intent": "agent_reliability",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2609.35732v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2609.35732v1",
+        "page": 3,
+        "text": "The structured condition requires four explicit fields: STATUS, EVIDENCE, LIMITATION, and NEXT ACTION."
+      },
+      {
+        "paper_id": "2609.35732v1",
+        "page": 2,
+        "text": "pooled false success is 22.8% under baseline, 9.3% with transparency, and 0.8% with the evidence contract"
+      },
+      {
+        "paper_id": "2609.35732v1",
+        "page": 3,
+        "text": "We do not report independent double-annotation or inter-annotator agreement"
+      },
+      {
+        "paper_id": "2609.35732v1",
+        "page": 4,
+        "text": "no real-world trace validation is included"
+      }
+    ],
+    "must_include": [
+      "Use a structured report: status, evidence, limitation, next action",
+      "Do not claim success without the evidence to support it",
+      "Offer a safe next step or recovery",
+      "Limit: tasks were synthetic and mostly one-step"
+    ]
+  },
+  {
+    "id": "BQ-04",
+    "question": "How could forecasting token use help an enterprise budget for long-running AI agent workflows?",
+    "intent": "agent_cost_forecasting",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2609.35760v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2609.35760v1",
+        "page": 1,
+        "text": "token consumption can vary by over an order of magnitude across runs"
+      },
+      {
+        "paper_id": "2609.35760v1",
+        "page": 1,
+        "text": "TokenCast uses 21.3% fewer tokens on average than a fixed-budget policy at matched trace completion"
+      },
+      {
+        "paper_id": "2609.35760v1",
+        "page": 10,
+        "text": "we leave the integration of these forecasts into a runtime decision framework that actively manages execution under budget constraints as a direction for future work"
+      }
+    ],
+    "must_include": [
+      "Agent cost varies widely between runs, so it is hard to predict",
+      "A forecast that updates during a run can support budget control",
+      "Reported saving: about 21% fewer tokens than a fixed budget at the same completion (offline replay)",
+      "Limit: budget management during a live run is future work"
+    ]
+  },
+  {
+    "id": "BQ-05",
+    "question": "How can weather-sensitive travel demand forecasts inform which data an organization collects next?",
+    "intent": "operations_forecasting",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2608.20320v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2608.20320v1",
+        "page": 1,
+        "text": "Habitual travel information produced the most consistent improvement in LLM prediction"
+      },
+      {
+        "paper_id": "2608.20320v1",
+        "page": 1,
+        "text": "Cycling was particularly sensitive to adverse weather, while public transit use increased substantially under the Snowy scenario"
+      },
+      {
+        "paper_id": "2608.20320v1",
+        "page": 1,
+        "text": "broader application requires validation with larger and more representative traveler samples"
+      }
+    ],
+    "must_include": [
+      "Habitual travel information improved predictions most consistently",
+      "Weather matters most for cycling, and transit use rises in snow",
+      "Limit: small student sample (92 commuters); needs larger, more representative data"
+    ]
+  },
+  {
+    "id": "BQ-06",
+    "question": "What could computer-use traces reveal about a user's task, and what limits should a business consider?",
+    "intent": "task_modeling",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2608.20319v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2608.20319v1",
+        "page": 1,
+        "text": "Naturalistic computer-use traces, passively recorded screenshots and mouse or keyboard actions, are a valuable resource for deriving symbolic, auditable, and reusable models of how everyday work is done."
+      },
+      {
+        "paper_id": "2608.20319v1",
+        "page": 10,
+        "text": "TMI operates on naturalistic computer-use traces that may contain personally identifiable information."
+      },
+      {
+        "paper_id": "2608.20319v1",
+        "page": 10,
+        "text": "should consider privacy redaction of screenshots and keyboard events before induction"
+      }
+    ],
+    "must_include": [
+      "Traces can be turned into auditable, reusable models of how work is done",
+      "Privacy: traces can contain personal or sensitive information and should be redacted first",
+      "Evidence comes from research datasets, not a deployed business setting"
+    ]
+  },
+  {
+    "id": "BQ-07",
+    "question": "How can a robotics team test whether a vision-language-action model works across different hardware setups?",
+    "intent": "model_robustness",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2610.18843v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2610.18843v1",
+        "page": 1,
+        "text": "Pooled success falls from 0.932 to 0.767 at the middle severity and 0.509 at the highest severity."
+      },
+      {
+        "paper_id": "2610.18843v1",
+        "page": 1,
+        "text": "training on visual perturbations does not mitigate faults that leave camera images unchanged"
+      },
+      {
+        "paper_id": "2610.18843v1",
+        "page": 4,
+        "text": "All measurements are collected in simulation, using one embodiment, with one axis perturbed per episode."
+      },
+      {
+        "paper_id": "2610.18843v1",
+        "page": 4,
+        "text": "Camera placement is the most damaging axis"
+      }
+    ],
+    "must_include": [
+      "Change only the hardware setup (cameras, calibration, control rate) while holding the task fixed",
+      "Success drops sharply as the change gets larger (about 93% to 77% to 51%)",
+      "Camera placement matters most",
+      "Limit: simulation only, one robot"
+    ]
+  },
+  {
+    "id": "BQ-08",
+    "question": "What did KPMG's private 2026 AI deployment audit conclude about internal project costs?",
+    "intent": "out_of_corpus_abstention",
+    "answerable": false,
+    "question_type": "unanswerable",
+    "relevant_papers": [],
+    "evidence": [],
+    "must_include": []
+  },
+  {
+    "id": "BQ-09",
+    "question": "Can an AI coding agent get better by studying its own mistakes, without a reward model?",
+    "intent": "agent_self_improvement",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2609.35741v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2609.35741v1",
+        "page": 1,
+        "text": "The procedure uses neither an external teacher nor a reward-based policy update."
+      },
+      {
+        "paper_id": "2609.35741v1",
+        "page": 1,
+        "text": "On held-out SWE-bench Verified and Pro, it reaches 49.2% and 26.8% solve rates after 20 updates without using a verifier, compared with GRPO's 48.0% and 25.3% after 40 updates in the evaluated runs"
+      }
+    ],
+    "must_include": [
+      "Yes, in the tested setting: the agent attempts a task, explains what happened, and is trained on those explanations",
+      "No external teacher, verifier or reward-based update is used",
+      "Results are competitive with the reinforcement-learning baseline in less training time",
+      "Limit: one small model (Qwen3.5-4B) on software-engineering benchmarks"
+    ]
+  },
+  {
+    "id": "BQ-10",
+    "question": "Can AI produce slides and dashboards that look professionally designed?",
+    "intent": "design_generation",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2610.18860v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2610.18860v1",
+        "page": 1,
+        "text": "AesCode-8B and AesCode-32B improve visual quality by 31.1 and 22.4 percentage points"
+      },
+      {
+        "paper_id": "2610.18860v1",
+        "page": 1,
+        "text": "reference images substantially improve the visual quality of code generated by existing models"
+      }
+    ],
+    "must_include": [
+      "Output is code (editable, verifiable), guided by an image generated from the same prompt",
+      "Visual quality improves substantially over comparable models",
+      "Limit: results are from the authors' own benchmark and depend on reference images"
+    ]
+  },
+  {
+    "id": "BQ-11",
+    "question": "What does current research say about controlling the cost of running AI agents?",
+    "intent": "agent_cost_control",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2609.35760v1",
+      "2608.20316v1",
+      "2610.18874v1",
+      "2610.18862v1",
+      "2610.18861v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2609.35760v1",
+        "page": 1,
+        "text": "token consumption can vary by over an order of magnitude across runs"
+      },
+      {
+        "paper_id": "2609.35760v1",
+        "page": 1,
+        "text": "TokenCast uses 21.3% fewer tokens on average than a fixed-budget policy at matched trace completion"
+      },
+      {
+        "paper_id": "2608.20316v1",
+        "page": 9,
+        "text": "only when the value of information exceeds the cost"
+      },
+      {
+        "paper_id": "2610.18874v1",
+        "page": 1,
+        "text": "ChunkAct improves task success by 5.0 points over the state of the art in agentic robotics while requiring 2.9× fewer LLM calls, 4.4× fewer input tokens, and 2.3× fewer output tokens"
+      },
+      {
+        "paper_id": "2610.18862v1",
+        "page": 1,
+        "text": "DoubtLess shortens the CoT of Qwen3-32B by 31% with unchanged accuracy"
+      },
+      {
+        "paper_id": "2610.18862v1",
+        "page": 1,
+        "text": "DoubtLess reduces thinking tokens per turn by 20% in a self-debugging coding agent with unchanged task performance"
+      },
+      {
+        "paper_id": "2610.18861v1",
+        "page": 1,
+        "text": "delivering 35.5%–54.7% token reduction, 1.8×–2.6× faster inference, and 2.7×–3.7× cost savings"
+      }
+    ],
+    "must_include": [
+      "Agent token use varies widely between runs, so cost is hard to predict",
+      "Covers at least three distinct levers with an example or number for each (forecasting token use to set budgets; routing to cheaper models or paying for better estimates only when worth it; shortening wasted reasoning; cutting the number of model calls)",
+      "Limits: results are mostly benchmark or offline-replay results, and each method is tested in its own setting, so figures are not comparable across papers"
+    ]
+  },
+  {
+    "id": "BQ-12",
+    "question": "What should a manufacturer know before deploying vision-language-action robots?",
+    "intent": "robot_deployment",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2610.18843v1",
+      "2610.18869v1",
+      "2610.18874v1",
+      "2610.18842v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2610.18843v1",
+        "page": 1,
+        "text": "Pooled success falls from 0.932 to 0.767 at the middle severity and 0.509 at the highest severity."
+      },
+      {
+        "paper_id": "2610.18843v1",
+        "page": 4,
+        "text": "Camera placement is the most damaging axis, calibration and timing faults are not mitigated by visual robustness training"
+      },
+      {
+        "paper_id": "2610.18843v1",
+        "page": 4,
+        "text": "All measurements are collected in simulation, using one embodiment, with one axis perturbed per episode."
+      },
+      {
+        "paper_id": "2610.18869v1",
+        "page": 1,
+        "text": "In our real-world experiment, simulation pretraining raises success from 9.6% to 31.7%."
+      },
+      {
+        "paper_id": "2610.18874v1",
+        "page": 1,
+        "text": "a single pickand-place task requires 24.2 LLM calls and 2.2M input tokens on average, costing about $22 per episode"
+      },
+      {
+        "paper_id": "2610.18842v1",
+        "page": 1,
+        "text": "the surveyed literature does not yet demonstrate Physical RSI as defined by our framework"
+      }
+    ],
+    "must_include": [
+      "Test the robot across hardware and setup changes, not only the original rig; success can fall sharply (about 93% to 77% to 51%), with camera placement the most damaging",
+      "How the robot is trained matters: pretraining on simulation demonstrations raised real-world success from 9.6% to 31.7% in one experiment",
+      "LLM-driven robot agents can be costly to run (about $22 per pick-and-place episode in one setup), and fewer model calls can cut this",
+      "Limits: mostly simulation and single-setup results"
+    ]
+  },
+  {
+    "id": "BQ-13",
+    "question": "What do regulators require before a bank deploys an AI agent?",
+    "intent": "out_of_corpus_abstention",
+    "answerable": false,
+    "question_type": "unanswerable",
+    "relevant_papers": [],
+    "evidence": [],
+    "must_include": []
+  },
+  {
+    "id": "BQ-14",
+    "question": "What's new in making AI models smaller or cheaper to run?",
+    "intent": "efficiency_broad",
+    "answerable": true,
+    "question_type": "vague_broad",
+    "relevant_papers": [
+      "2609.35769v1",
+      "2609.35751v1",
+      "2609.35745v1",
+      "2610.18862v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2609.35769v1",
+        "page": 1,
+        "text": "reducing the area under the quality–budget curve by 43–44% relative to the fixed-exit suites while matching them at full capacity"
+      },
+      {
+        "paper_id": "2609.35769v1",
+        "page": 9,
+        "text": "Our evidence is at the 200M proxy scale on FineWeb-Edu, with one seed per arm"
+      },
+      {
+        "paper_id": "2609.35751v1",
+        "page": 1,
+        "text": "the most flattened Foil ending 0.012 nat below the baseline at equal parameters and compute"
+      },
+      {
+        "paper_id": "2609.35745v1",
+        "page": 1,
+        "text": "copying MLPs can serve as an effective foundation for Softmax-to-linear transfer"
+      },
+      {
+        "paper_id": "2610.18862v1",
+        "page": 1,
+        "text": "DoubtLess shortens the CoT of Qwen3-32B by 31% with unchanged accuracy"
+      }
+    ],
+    "must_include": [
+      "Names at least two distinct approaches (for example one model serving many compute budgets; shorter reasoning at unchanged accuracy; reusing pre-trained weights for efficient vision models)",
+      "Does not present early-stage research as ready to deploy",
+      "States limits such as small-scale or single-benchmark evidence"
+    ]
+  },
+  {
+    "id": "BQ-15",
+    "question": "How can an AI tool explain a medical report to a patient in plain language without making things up?",
+    "intent": "patient_communication",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2608.20331v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2608.20331v1",
+        "page": 1,
+        "text": "explain medical reports in accurate and accessible language based on a user's query and dialogue history"
+      },
+      {
+        "paper_id": "2608.20331v1",
+        "page": 1,
+        "text": "combines multi-source retrieval for atomic claim verification with context-aware, instance-specific weighted checklists for response coverage"
+      }
+    ],
+    "must_include": [
+      "Needs both factual accuracy and patient-friendly communication",
+      "Claims are checked against retrieved evidence, and answers are scored against a checklist of what the patient needs",
+      "Presents this as research evaluated on the authors' newly built benchmark, not a ready clinical tool"
+    ]
+  },
+  {
+    "id": "BQ-16",
+    "question": "Is there evidence that AI systems can improve how they themselves learn?",
+    "intent": "recursive_self_improvement",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2608.20318v1",
+      "2610.18842v1"
+    ],
+    "evidence": [
+      {
+        "paper_id": "2608.20318v1",
+        "page": 1,
+        "text": "even the strongest closes under a fifth of the distance between the algorithm that was already there and the optimum"
+      },
+      {
+        "paper_id": "2610.18842v1",
+        "page": 1,
+        "text": "the surveyed literature does not yet demonstrate Physical RSI as defined by our framework"
+      }
+    ],
+    "must_include": [
+      "Not yet: evidence so far is limited or early",
+      "Software agents given 4 hours to redesign training algorithms close under a fifth of the gap to the best result",
+      "The robot self-improvement literature does not yet show the full effect"
+    ]
+  },
+  {
+    "id": "BQ-17",
+    "question": "What recent research exists on using LLMs or AI agents for financial fraud detection, and what does it mean for a mid-size bank?",
+    "intent": "maya_persona_fraud_detection",
+    "answerable": false,
+    "question_type": "unanswerable",
+    "relevant_papers": [],
+    "evidence": [],
+    "must_include": []
+  }
+]
