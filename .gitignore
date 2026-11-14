@@ -16,3 +16,7 @@ data/chroma/
 .env
 .env.*
 !.env.example
+
+# Local app databases (vector store + chat history); rebuilt/created locally.
+data/database/chroma/
+data/database/sqllite/
