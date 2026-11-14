@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* KPMG design tokens (check exact values against the brand guide) */
+@theme {
+  --color-kpmg-navy: #0c233c;     /* top bar */
+  --color-kpmg-cobalt: #00338d;   /* page background */
+  --color-kpmg-blue: #1e49e2;     /* banner, primary actions */
+  --color-kpmg-purple: #7213ea;   /* banner gradient */
+  --color-kpmg-cyan: #00b8f5;     /* active underline, highlights */
+  --color-kpmg-lavender: #eceefb; /* light panel */
+
+  --color-ink: #0c233c;
+  --color-muted: #44506a;
+  --color-line: #d3d8ef;
+  --color-wire: #8e9ad0;
+
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Bahnschrift SemiBold Condensed", "Bahnschrift Condensed", "Arial Narrow", "Roboto Condensed", var(--font-sans);
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* Desktop-first breakpoints matching the original max-width: 1100px / 680px queries */
+  --breakpoint-tab: 1101px;
+  --breakpoint-phone: 681px;
+
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.3s ease;
+  --animate-fade-in-fast: fade-in 0.2s ease;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-kpmg-cobalt text-ink font-sans text-[16px] leading-[1.6] antialiased min-h-screen;
+  }
+  summary::-webkit-details-marker { display: none; }
+}

@@ -1,0 +1,15 @@
+# Build context for the backend image (repository root). Only src/, backend/ and requirements.txt are needed.
+.git
+.env
+.env.*
+.venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+data
+docs
+evaluation
+notebooks
+tests
+ui
+*.docx
