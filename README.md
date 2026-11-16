@@ -109,6 +109,28 @@ its stable chunk IDs and source offsets. Retrieval quality, citation support,
 and generated answer quality still need evaluation. Candidate questions live in
 [`evaluation/benchmark_questions.json`](evaluation/benchmark_questions.json).
 
+### Retrieval and summarization
+
+After preparing and indexing the active corpus, run one business question through
+the same two-stage vector search and Claude summarizer used by the interactive
+prototype. Set `ANTHROPIC_API_KEY` in the environment or a local `.env` file:
+
+```bash
+PYTHONPATH=src python -m answer_pipeline \
+  --question 'How should a tool-using AI agent report a failed task?'
+```
+
+To search one already indexed research article, add `--paper-id 2609.35732v1`.
+To inspect the ranked passages without an API key or model call, add
+`--retrieval-only`. Repeat `--question` to process several questions. Each
+question produces one JSON record with the summary, source passages, and a
+mechanical citation check. `needs_review` means a citation is absent or names
+a paper/page outside the retrieved passages; even `ok` needs human claim-support
+review. The command does not collect papers or rebuild the index.
+
+See [the initial workflow evaluation](docs/retrieval_summarization_evaluation.md)
+for the reproducible sample run and its limits.
+
 ---
 
 ## 🏗️ **Project Overview**
