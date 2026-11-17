@@ -10,7 +10,7 @@
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @b1wilks             | Benchmark Questions                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
-| Matias Freire          | @MatiasPF1       |                                                                          |
+| Matias Freire          | @MatiasPF1       |           Backend/Frontend & Rag  Pipeline                                                             |
 | Chaitanya Raj Shah     | @cr-shah      |   data pipeline/indexing                          |
 | Madison Lizbinski      | @Madisonlizbinski   |  Prompts                                                                        |
 
