@@ -6,7 +6,7 @@
 
 | Name                   | GitHub Handle | Contribution                                                             |
 |------------------------|---------------|--------------------------------------------------------------------------|
-| Bhoomi Patni           | @bhoomipatni  |                                                                          |
+| Bhoomi Patni           | @bhoomipatni  |  Embedding Models Testing and Research                                                          |
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @b1wilks             | Benchmark Questions                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
