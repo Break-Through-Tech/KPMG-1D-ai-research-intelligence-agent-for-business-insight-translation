@@ -1,0 +1,9 @@
+model,model_name,provider,questions,question_sets,recall_at_5,mrr,latency_p50_ms,latency_mean_ms,build_seconds,papers_added,chunks_added
+minilm,all-MiniLM-L6-v2,sentence-transformers,24,benchmark_questions_2|prompts_labeled,0.7386,0.6799,85.15,92.55,98.35,0,0
+bge-small,BAAI/bge-small-en-v1.5,sentence-transformers,24,benchmark_questions_2|prompts_labeled,0.7375,0.7083,121.78,132.74,9.36,0,0
+mpnet,all-mpnet-base-v2,sentence-transformers,24,benchmark_questions_2|prompts_labeled,0.7486,0.734,177.74,188.08,19.99,0,0
+bge-base,BAAI/bge-base-en-v1.5,sentence-transformers,24,benchmark_questions_2|prompts_labeled,0.7222,0.7396,176.67,176.13,19.42,0,0
+bge-large,BAAI/bge-large-en-v1.5,sentence-transformers,24,benchmark_questions_2|prompts_labeled,0.7611,0.7604,398.17,425.39,24.09,0,0
+e5-large,intfloat/e5-large-v2,sentence-transformers-e5,24,benchmark_questions_2|prompts_labeled,0.7729,0.7931,563.63,575.06,1350.37,0,529
+e5-base,intfloat/e5-base-v2,sentence-transformers-e5,24,benchmark_questions_2|prompts_labeled,0.7393,0.7167,318.06,336.98,3479.13,55,4529
+gte-base,thenlper/gte-base,sentence-transformers,24,benchmark_questions_2|prompts_labeled,0.7594,0.6229,608.94,614.2,21745.59,0,4145

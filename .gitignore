@@ -11,8 +11,13 @@ data/chroma/*
 data/raw/pdfs/
 data/processed/
 data/chroma/
+data/benchmark-chroma/
 
 # Local configuration and secrets.
 .env
 .env.*
 !.env.example
+
+# Local app databases (vector store + chat history); rebuilt/created locally.
+data/database/chroma/
+data/database/sqllite/

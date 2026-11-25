@@ -1,0 +1,37 @@
+# Run the whole app:  docker compose up --build    then open http://localhost:8080
+# Needs a .env in the repository root with ANTHROPIC_API_KEY (copy .env.example).
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]  # keep open conversations across restarts
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: .env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./data:/app/data                        # papers, Chroma and SQLite stay in the project folder
+      - model-cache:/root/.cache/huggingface    # embedding model, downloaded once
+    ports:
+      - "8000:8000"                             # API docs at http://localhost:8000/docs
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  ui:
+    build: ui/react
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+  model-cache:

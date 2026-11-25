@@ -1,0 +1,135 @@
+[
+  {
+    "id": "PROMPT-01",
+    "source_prompt": "Junior Business Analyst Research Summary",
+    "question": "What problem does G-CARL address, how does it approach patient-oriented medical report interpretation, and what is its potential business relevance?",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2608.20331v1"
+    ],
+    "label_rationale": "The question asks specifically about G-CARL, the paper on grounded checklist-aligned reward learning for patient-oriented medical report interpretation."
+  },
+  {
+    "id": "PROMPT-02",
+    "source_prompt": "Identify the Most Important Findings",
+    "question": "What research approaches can reduce AI-agent operating costs while preserving or improving task quality?",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2608.20316v1",
+      "2609.35760v1",
+      "2609.35769v1",
+      "2610.18862v1"
+    ],
+    "label_rationale": "These papers examine cost-aware model routing, token-consumption forecasting, variable-compute language models, and shorter reasoning."
+  },
+  {
+    "id": "PROMPT-03",
+    "source_prompt": "Research Limitations",
+    "question": "What privacy and generalization limitations should organizations consider before using computer-use traces to model workplace tasks?",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2608.20319v1"
+    ],
+    "label_rationale": "The paper studies task-model induction from naturalistic computer-use traces and discusses privacy risks and research limitations."
+  },
+  {
+    "id": "PROMPT-04",
+    "source_prompt": "Translate AI Research Into Business Insights",
+    "question": "How could forecasting token consumption help an organization control the cost of long-running AI-agent workflows, and what remains unproven?",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2609.35760v1"
+    ],
+    "label_rationale": "TokenCast forecasts token use during agent execution and reports offline-replay results; its live runtime integration remains future work."
+  },
+  {
+    "id": "PROMPT-05",
+    "source_prompt": "Financial Services Application",
+    "question": "How can a financial services team evaluate whether an AI agent's research output is reliable?",
+    "answerable": true,
+    "question_type": "single_paper",
+    "relevant_papers": [
+      "2609.35744v1"
+    ],
+    "label_rationale": "FinAutoRubric focuses on automatically evaluating financial research agents with expert-guided rubrics."
+  },
+  {
+    "id": "PROMPT-06",
+    "source_prompt": "Industry Comparison",
+    "question": "What does current research suggest about applying AI to patient communication in healthcare and vision-language-action robots in manufacturing?",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2608.20331v1",
+      "2610.18843v1",
+      "2610.18869v1",
+      "2610.18874v1",
+      "2611.08433v1"
+    ],
+    "label_rationale": "The selected papers cover patient-facing medical interpretation and dialogue, plus robustness, pretraining, and action chunking for robotic agents."
+  },
+  {
+    "id": "PROMPT-07",
+    "source_prompt": "Return on Investment",
+    "question": "What evidence can help an organization estimate and manage the costs of deploying AI agents?",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2608.20316v1",
+      "2609.35760v1",
+      "2610.18874v1"
+    ],
+    "label_rationale": "The papers address cost-aware routing, token-use forecasting, and measured model-call and token costs in an agentic robotics setup."
+  },
+  {
+    "id": "PROMPT-08",
+    "source_prompt": "Strategic Recommendations",
+    "question": "What should an enterprise prioritize to improve AI-agent reliability, evaluation, and cost control before deployment?",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2608.20316v1",
+      "2609.35732v1",
+      "2609.35744v1",
+      "2609.35760v1"
+    ],
+    "label_rationale": "These papers provide evidence on cost-aware routing, transparent failure reporting, financial-agent evaluation, and token forecasting."
+  },
+  {
+    "id": "PROMPT-09",
+    "source_prompt": "Emerging AI Trends Report",
+    "question": "What recent approaches aim to make AI agents more efficient, reliable, and capable in real-world tasks?",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2609.35732v1",
+      "2609.35760v1",
+      "2610.18862v1",
+      "2610.18843v1",
+      "2610.18869v1",
+      "2610.18874v1"
+    ],
+    "label_rationale": "The selected studies cover failure transparency, token forecasting, efficient reasoning, and robustness, pretraining, and action chunking for robotic agents."
+  },
+  {
+    "id": "PROMPT-10",
+    "source_prompt": "KPMG AI Research Intelligence Briefing",
+    "question": "Which recent AI-agent findings are most relevant to enterprise adoption, and what opportunities, risks, and research limitations should leaders consider?",
+    "answerable": true,
+    "question_type": "multi_paper",
+    "relevant_papers": [
+      "2608.20316v1",
+      "2608.20331v1",
+      "2609.35732v1",
+      "2609.35744v1",
+      "2609.35760v1",
+      "2610.18843v1",
+      "2610.18869v1"
+    ],
+    "label_rationale": "This briefing query spans enterprise-relevant research on routing, healthcare interpretation, agent reliability and evaluation, operating costs, and deployment robustness."
+  }
+]

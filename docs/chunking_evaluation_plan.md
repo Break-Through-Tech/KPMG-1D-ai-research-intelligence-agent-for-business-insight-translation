@@ -40,3 +40,16 @@ quality claims. Expand corpus and query diversity, review answerability and
 report uncertainty before choosing a final approach. PR3 runs no retrieval,
 model benchmark, generation or evaluation, and no evaluation labels enter its
 published datasets.
+
+## Candidate questions for human labeling
+
+`evaluation/benchmark_questions.json` holds eight candidate business questions
+for the current 25-paper corpus, including one deliberate out-of-corpus query.
+They are prompts only: no expected answers, relevance judgments, or scores have
+been assigned. Before measuring retrieval, reviewers should confirm the wording
+is useful to KPMG, mark supporting paper IDs, physical PDF pages, and exact
+source spans, and identify which questions have no supported answer. Freeze a
+held-out subset before tuning ranking or chunk settings. Keep the resulting
+labels and expected answers outside the indexed corpus. Then execute the
+Recall@5, MRR, citation-support, and latency protocol above against a recorded
+active generation and index configuration.

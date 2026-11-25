@@ -2,8 +2,11 @@
 
 Stage 1 defines the prototype corpus, validates metadata, and prepares a paper
 catalog. Stage 2 extracts each original PDF page with source citation metadata.
-Both use the five supplied PDFs as a fixed local fixture. Stage 3 adds three
-chunking profiles and a validated dataset loader; no stage builds a retriever.
+The original Stage 1–3 validation used five supplied PDFs as a fixed local
+fixture. Stage 3 adds three chunking profiles and a validated dataset loader.
+The current manifest has 25 tracked PDFs and 663 committed page records;
+`indexing_pipeline` now consumes the selected validated passage generation.
+The historical five-paper counts below remain the original stage baseline.
 
 ## Setup and local commands
 
@@ -24,8 +27,9 @@ validates records, checks local PDF availability, and stages the catalog before
 replacing `data/processed/papers.jsonl`. The catalog contains one paper per line
 and is generated rather than committed. Reruns do not append duplicate records.
 
-The five supplied PDFs remain tracked at their existing `data/` paths. Newly
-downloaded PDFs go under ignored `data/raw/pdfs/`. Environments, generated
+The original five PDFs and later additions are tracked under
+`data/Retrieve_Papers/`. Newly downloaded PDFs go under ignored
+`data/raw/pdfs/`. Environments, generated
 catalogs, vector databases, and local secrets are also ignored.
 
 A different manifest can be passed before the subcommand:
@@ -358,19 +362,19 @@ input hash; it does not claim to revalidate those pages against PDF contents.
 
 ## Retrieval handoff and next stages
 
-The versioned `paper_id` follows the `id` convention in Matias's
-`Retrieval_Indexing` branch. That branch already downloads recent papers and
-indexes titles and abstracts; it remains separate from this fixed-manifest
-implementation. No CSV adapter or combined retrieval workflow is included.
+The versioned `paper_id` follows the `id` convention in Matias's original
+`Retrieval_Indexing` branch. The merged `indexing_pipeline` now indexes the
+active generation from this pipeline and keeps paper and passage vectors
+matched to its included paper IDs. No CSV adapter is included.
 
 PR3 consumes these pages and creates chunks with source citation metadata.
 `load_passages(run_root, pointer_path, paper_ids=...)` returns validated chunks
 filtered by canonical paper IDs; it does not embed, search, or change Chroma.
 The read-only `coverage --metadata-csv PATH` command compares included IDs with
-his CSV's `id` column. Later integration should agree on the corpus
-and bridge this manifest to Matias's CSV rather than maintaining two competing
-paper collections. This stage does not collect abstracts or categories for his
-index; those fields would need to come from his metadata or a future adapter.
+his CSV's `id` column. The indexer now uses the manifest's abstracts and
+URLs for its paper collection and the active generation's verified chunks for
+its passage collection. The
+original coverage command remains available for comparing external metadata.
 
 ## Limitations
 
@@ -380,8 +384,7 @@ image-only PDFs need OCR, which is not implemented. Sampling the supplied first
 and last pages confirms title/body/reference/appendix text is present, not that
 every PDF element is accurate. The original PDF remains authoritative.
 
-There is no retry framework, scheduled collection, latest-paper search,
-CSV conversion adapter, passage index, embeddings, generation, UI, or retrieval
-evaluation here. Identifier compatibility with Matias is not a tested retrieval
-integration. These results establish data preparation, not research answer
-quality.
+The preparation stages described here do not run retrieval evaluation or
+establish research answer quality. A separate prototype now indexes and searches
+the validated passages; generation remains a draft interactive path. There is
+still no scheduled collection, CSV adapter, or human-judged retrieval benchmark.
