@@ -28,6 +28,27 @@ class E5EmbeddingFunction(SentenceTransformerEmbeddingFunction):
         return super().__call__(texts)
 
 
+def query_embedding_text(text: str, provider: str) -> str:
+    """Format query text for embedding providers that require query prefixes."""
+
+    return f"query: {text}" if provider == "sentence-transformers-e5" else text
+
+
+def build_embedding_function(config: IndexingConfig):
+    """Create the embedding function selected by the indexing configuration."""
+
+    if config.embedding_provider == "openai":
+        return OpenAIEmbeddingFunction(
+            model_name=config.embedding_model,
+            api_key_env_var="OPENAI_API_KEY",
+        )
+    if config.embedding_provider == "sentence-transformers":
+        return SentenceTransformerEmbeddingFunction(model_name=config.embedding_model)
+    if config.embedding_provider == "sentence-transformers-e5":
+        return E5EmbeddingFunction(model_name=config.embedding_model)
+    raise ValueError(f"Unsupported embedding provider: {config.embedding_provider}")
+
+
 class PaperIndexer:
     """Keep paper and passage vectors aligned with one published generation."""
 
@@ -40,17 +61,8 @@ class PaperIndexer:
         self._source()
         if embedding_function is not None:
             self.embed_fn = embedding_function
-        elif config.embedding_provider == "openai":
-            self.embed_fn = OpenAIEmbeddingFunction(
-                model_name=config.embedding_model,
-                api_key_env_var="OPENAI_API_KEY",
-            )
-        elif config.embedding_provider == "sentence-transformers":
-            self.embed_fn = SentenceTransformerEmbeddingFunction(model_name=config.embedding_model)
-        elif config.embedding_provider == "sentence-transformers-e5":
-            self.embed_fn = E5EmbeddingFunction(model_name=config.embedding_model)
         else:
-            raise ValueError(f"Unsupported embedding provider: {config.embedding_provider}")
+            self.embed_fn = build_embedding_function(config)
         probe = self.embed_fn(input=["validated-passage-index-embedding-probe-v1"])[0]
         self.embedding_dimensions = len(probe)
         self.embedding_fingerprint = canonical_hash({
@@ -170,7 +182,7 @@ class PaperIndexer:
         count = len(dataset.manifest["included_paper_ids"])
         if not count:
             return []
-        query = f"query: {question}" if self.config.embedding_provider == "sentence-transformers-e5" else question
+        query = query_embedding_text(question, self.config.embedding_provider)
         result = self.papers.query(query_texts=[query], n_results=min(k, count),
                                    where={"generation": generation}, include=["metadatas", "distances"])
         return [{"id": identifier, "title": metadata["title"], "url": metadata["url"],
@@ -190,7 +202,7 @@ class PaperIndexer:
         paper_ids = sorted(set(paper_ids) & allowed)
         if not paper_ids or not dataset.chunks:
             return []
-        query = f"query: {question}" if self.config.embedding_provider == "sentence-transformers-e5" else question
+        query = query_embedding_text(question, self.config.embedding_provider)
         result = self.chunks.query(query_texts=[query], n_results=min(k, len(dataset.chunks)),
                                    where={"$and": [{"generation": generation},
                                                    {"paper_id": {"$in": paper_ids}}]},

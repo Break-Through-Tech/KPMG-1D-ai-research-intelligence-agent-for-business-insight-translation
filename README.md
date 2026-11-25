@@ -105,8 +105,11 @@ for offline indexing checks without embedding model weights.
 See [PR3 verification](docs/pr3_validation.md) and
 [the evaluation plan](docs/chunking_evaluation_plan.md).
 The indexer now consumes the active validated passage generation, including
-its stable chunk IDs and source offsets. Retrieval quality, citation support,
-and generated answer quality still need evaluation. Candidate questions live in
+its stable chunk IDs and source offsets. E5-large (`intfloat/e5-large-v2`) is
+the default embedding model; indexing uses `passage:` prefixes and search
+queries use `query:` prefixes. After changing to E5-large, use the UI's Store
+action to rebuild the local vector index before searching. Retrieval quality,
+citation support, and generated answer quality still need evaluation. Candidate questions live in
 [`evaluation/benchmark_questions.json`](evaluation/benchmark_questions.json).
 
 The local embedding benchmark compares MiniLM, BGE-small, MPNet, BGE-base,

@@ -9,11 +9,12 @@ import json
 import threading
 
 import chromadb
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from fastapi import APIRouter, HTTPException, Query
 
 from api.Query_Chroma import _vector
+from api.embedding import get_embedding_function
 from api.pipeline.store import INDEXING_CONFIG
+from indexing_pipeline.indexing import query_embedding_text
 
 TOP_K = 6  # passages returned per search
 
@@ -32,8 +33,9 @@ def _embed(text):
     global _embedder
     with _embedder_lock:
         if _embedder is None:
-            _embedder = SentenceTransformerEmbeddingFunction(model_name=INDEXING_CONFIG.embedding_model)
-    return [float(value) for value in _embedder([text])[0]]
+            _embedder = get_embedding_function(INDEXING_CONFIG)
+    query = query_embedding_text(text, INDEXING_CONFIG.embedding_provider)
+    return [float(value) for value in _embedder([query])[0]]
 
 
 def warm_up():
