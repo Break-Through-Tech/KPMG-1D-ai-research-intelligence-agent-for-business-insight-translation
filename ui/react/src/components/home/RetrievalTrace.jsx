@@ -5,6 +5,7 @@ import EmbeddingCard from "../EmbeddingCard.jsx";
 export default function RetrievalTrace({ retrievals }) {
   const passages = retrievals.reduce((n, r) => n + r.passages.length, 0);
   const { embedding_model, dimensions } = retrievals[0];
+  const usesE5 = embedding_model.startsWith("intfloat/e5-");
 
   return (
     <details className="group mt-3 pt-3 border-t border-line">
@@ -18,6 +19,11 @@ export default function RetrievalTrace({ retrievals }) {
           {embedding_model} · {dimensions} dimensions
         </span>
       </summary>
+      {usesE5 && (
+        <p className="mt-2 text-[12px] text-[#8a93ab]">
+          Search queries use the E5 <code>query:</code> prefix; indexed paper text uses <code>passage:</code>.
+        </p>
+      )}
 
       <div className="mt-3 flex flex-col gap-5 max-h-[520px] overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#d5dbee_transparent]">
         {retrievals.map((r, i) => (

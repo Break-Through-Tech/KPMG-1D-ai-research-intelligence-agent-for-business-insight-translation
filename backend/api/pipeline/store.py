@@ -4,6 +4,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
 
+from api.embedding import get_embedding_function
 from api.pipeline import pipeline_lock
 from indexing_pipeline.config import IndexingConfig
 from indexing_pipeline.indexing import PaperIndexer
@@ -29,7 +30,10 @@ def store_papers():
         if not result["artifacts_published"]:
             raise HTTPException(500, "Page corpus did not produce a complete validated passage generation")
 
-        indexer = PaperIndexer(INDEXING_CONFIG)
+        indexer = PaperIndexer(
+            INDEXING_CONFIG,
+            embedding_function=get_embedding_function(INDEXING_CONFIG),
+        )
         papers_updated = indexer.index_papers()
         chunks_updated = indexer.index_chunks()
         return {

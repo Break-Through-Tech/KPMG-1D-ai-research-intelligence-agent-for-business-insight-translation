@@ -18,8 +18,8 @@ class IndexingConfig:
     chroma_directory: Path = Path("data/chroma")
 
     # Embedding model and the ChromaDB collection with one entry per paper
-    embedding_model: str = "all-MiniLM-L6-v2"
-    embedding_provider: str = "sentence-transformers"
+    embedding_model: str = "intfloat/e5-large-v2"
+    embedding_provider: str = "sentence-transformers-e5"
     papers_collection: str = "papers"
 
     # ChromaDB collection with one entry per validated passage
