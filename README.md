@@ -6,7 +6,7 @@
 
 | Name                   | GitHub Handle | Contribution                                                             |
 |------------------------|---------------|--------------------------------------------------------------------------|
-| Bhoomi Patni           | @bhoomipatni  |  Embedding Models Testing and Research                                                          |
+| Bhoomi Patni           | @bhoomipatni  | Researched, compared, and evaluated multiple embedding models to identify the most suitable option for our RAG pipeline, providing a data-driven rationale for the final model selection|
 | Pratima Nallapareddy   | @PratimaNallapareddy|                                                                          |
 | Brianna Wilkins        | @b1wilks             | Benchmark Questions                                                                          |
 | Samita Bomasamudram    | @samita-boma  |                                                                          |
@@ -108,6 +108,19 @@ The indexer now consumes the active validated passage generation, including
 its stable chunk IDs and source offsets. Retrieval quality, citation support,
 and generated answer quality still need evaluation. Candidate questions live in
 [`evaluation/benchmark_questions.json`](evaluation/benchmark_questions.json).
+
+The local embedding benchmark compares MiniLM, BGE-small, MPNet, BGE-base,
+BGE-large, E5-large, E5-base, and GTE-base. It combines the labeled questions in
+`evaluation/benchmark_questions_2.json` and `evaluation/prompts_labeled.json`;
+unanswerable questions without relevance labels are excluded from retrieval
+scoring. Run `PYTHONPATH=src python -m indexing_pipeline.embedding_benchmark`.
+The aggregate comparison is written to
+`data/evaluation/embedding_comparison_labeled.csv`; per-question results are
+written to `data/evaluation/embedding_results_labeled.csv`. E5 models use the
+required `query:` and `passage:` prefixes. All benchmark models run locally and
+do not require an API key. The benchmark prints passage-index and per-question
+progress, saves both CSVs after each completed question, and can continue from
+saved results with `--resume` after an interruption.
 
 ---
 

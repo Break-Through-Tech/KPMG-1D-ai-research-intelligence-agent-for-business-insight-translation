@@ -1,14 +1,31 @@
 """Two-stage search over the selected, validated research passage generation."""
 
 import json
+import time
+from collections.abc import Iterable, Iterator
+from typing import Any, Callable
 
 import chromadb
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+from chromadb.utils.embedding_functions import (
+    OpenAIEmbeddingFunction,
+    SentenceTransformerEmbeddingFunction,
+)
 
 from indexing_pipeline.config import IndexingConfig
 from research_pipeline.chunking import canonical_hash, sha256_bytes
 from research_pipeline.datasets import load_active_dataset
 from research_pipeline.models import PaperMetadata
+
+
+class E5EmbeddingFunction(SentenceTransformerEmbeddingFunction):
+    """Apply E5's passage/query prefixes without changing stored documents."""
+
+    def __call__(self, input: Any):
+        texts = [
+            text if text.startswith(("query: ", "passage: ")) else f"passage: {text}"
+            for text in input
+        ]
+        return super().__call__(texts)
 
 
 class PaperIndexer:
@@ -21,8 +38,19 @@ class PaperIndexer:
         self.active_pointer = config.resolve(config.active_pointer)
         self.chroma_dir = config.resolve(config.chroma_directory)
         self._source()
-        self.embed_fn = (embedding_function if embedding_function is not None else
-                         SentenceTransformerEmbeddingFunction(model_name=config.embedding_model))
+        if embedding_function is not None:
+            self.embed_fn = embedding_function
+        elif config.embedding_provider == "openai":
+            self.embed_fn = OpenAIEmbeddingFunction(
+                model_name=config.embedding_model,
+                api_key_env_var="OPENAI_API_KEY",
+            )
+        elif config.embedding_provider == "sentence-transformers":
+            self.embed_fn = SentenceTransformerEmbeddingFunction(model_name=config.embedding_model)
+        elif config.embedding_provider == "sentence-transformers-e5":
+            self.embed_fn = E5EmbeddingFunction(model_name=config.embedding_model)
+        else:
+            raise ValueError(f"Unsupported embedding provider: {config.embedding_provider}")
         probe = self.embed_fn(input=["validated-passage-index-embedding-probe-v1"])[0]
         self.embedding_dimensions = len(probe)
         self.embedding_fingerprint = canonical_hash({
@@ -73,17 +101,21 @@ class PaperIndexer:
         return collection
 
     @staticmethod
-    def _reconcile(collection, desired):
+    def _reconcile(collection, desired, batch_size=1000, progress_callback=None):
         """Upsert changed records and delete vectors absent from the selected corpus."""
+        if batch_size < 1:
+            raise ValueError("batch_size must be greater than zero")
         stored = collection.get(include=["documents", "metadatas"])
         existing = {identifier: (document, metadata) for identifier, document, metadata in zip(
             stored["ids"], stored["documents"], stored["metadatas"])}
         changed = [(identifier, document, metadata) for identifier, (document, metadata) in desired.items()
                    if existing.get(identifier) != (document, metadata)]
-        for start in range(0, len(changed), 1000):
-            batch = changed[start:start + 1000]
+        for start in range(0, len(changed), batch_size):
+            batch = changed[start:start + batch_size]
             collection.upsert(ids=[row[0] for row in batch], documents=[row[1] for row in batch],
                               metadatas=[row[2] for row in batch])
+            if progress_callback is not None:
+                progress_callback(min(start + len(batch), len(changed)), len(changed))
         stale = sorted(set(existing) - set(desired))
         for start in range(0, len(stale), 1000):
             collection.delete(ids=stale[start:start + 1000])
@@ -104,7 +136,9 @@ class PaperIndexer:
         self.papers = self._ensure_dimensions(self.papers)
         return self._reconcile(self.papers, desired)
 
-    def index_chunks(self):
+    def index_chunks(
+        self, batch_size=1000, progress_callback: Callable[[int, int], None] | None = None
+    ):
         """Synchronize exact published passages and source offsets; return changed count."""
         dataset, _ = self._source()
         generation = dataset.directory.name
@@ -118,7 +152,9 @@ class PaperIndexer:
             "embedding_fingerprint": self.embedding_fingerprint,
         }) for chunk in dataset.chunks}
         self.chunks = self._ensure_dimensions(self.chunks)
-        return self._reconcile(self.chunks, desired)
+        return self._reconcile(
+            self.chunks, desired, batch_size=batch_size, progress_callback=progress_callback
+        )
 
     def _require_ids(self, collection, expected, generation, name):
         stored = collection.get(where={"generation": generation}, include=["metadatas"])
@@ -127,13 +163,15 @@ class PaperIndexer:
                                           self.embedding_fingerprint for metadata in stored["metadatas"]):
             raise RuntimeError(f"{name} index is not synchronized with the active generation")
 
-    def _search_papers(self, question, k, dataset):
+    def _search_papers(self, question, k, dataset, validate_index=True):
         generation = dataset.directory.name
-        self._require_ids(self.papers, dataset.manifest["included_paper_ids"], generation, "paper")
+        if validate_index:
+            self._require_ids(self.papers, dataset.manifest["included_paper_ids"], generation, "paper")
         count = len(dataset.manifest["included_paper_ids"])
         if not count:
             return []
-        result = self.papers.query(query_texts=[question], n_results=min(k, count),
+        query = f"query: {question}" if self.config.embedding_provider == "sentence-transformers-e5" else question
+        result = self.papers.query(query_texts=[query], n_results=min(k, count),
                                    where={"generation": generation}, include=["metadatas", "distances"])
         return [{"id": identifier, "title": metadata["title"], "url": metadata["url"],
                  "score": round(1 - distance, 3)} for identifier, metadata, distance in zip(
@@ -144,14 +182,16 @@ class PaperIndexer:
         dataset, _ = self._source()
         return self._search_papers(question, k, dataset)
 
-    def _search_chunks(self, question, paper_ids, k, dataset):
+    def _search_chunks(self, question, paper_ids, k, dataset, validate_index=True):
         generation = dataset.directory.name
-        self._require_ids(self.chunks, [chunk.chunk_id for chunk in dataset.chunks], generation, "passage")
+        if validate_index:
+            self._require_ids(self.chunks, [chunk.chunk_id for chunk in dataset.chunks], generation, "passage")
         allowed = set(dataset.manifest["included_paper_ids"])
         paper_ids = sorted(set(paper_ids) & allowed)
         if not paper_ids or not dataset.chunks:
             return []
-        result = self.chunks.query(query_texts=[question], n_results=min(k, len(dataset.chunks)),
+        query = f"query: {question}" if self.config.embedding_provider == "sentence-transformers-e5" else question
+        result = self.chunks.query(query_texts=[query], n_results=min(k, len(dataset.chunks)),
                                    where={"$and": [{"generation": generation},
                                                    {"paper_id": {"$in": paper_ids}}]},
                                    include=["documents", "metadatas", "distances"])
@@ -175,6 +215,24 @@ class PaperIndexer:
         dataset, _ = self._source()
         candidates = self._search_papers(question, n_papers, dataset)
         return self._search_chunks(question, [paper["id"] for paper in candidates], k, dataset)
+
+    def iter_search_two_stage(
+        self, questions: Iterable[str], n_papers=10, k=5
+    ) -> Iterator[tuple[list[dict], float]]:
+        """Search multiple questions after validating the active indexes once."""
+        dataset, _ = self._source()
+        generation = dataset.directory.name
+        self._require_ids(self.papers, dataset.manifest["included_paper_ids"], generation, "paper")
+        self._require_ids(
+            self.chunks, [chunk.chunk_id for chunk in dataset.chunks], generation, "passage"
+        )
+        for question in questions:
+            started = time.perf_counter()
+            candidates = self._search_papers(question, n_papers, dataset, validate_index=False)
+            results = self._search_chunks(
+                question, [paper["id"] for paper in candidates], k, dataset, validate_index=False
+            )
+            yield results, (time.perf_counter() - started) * 1000
 
 
 if __name__ == "__main__":

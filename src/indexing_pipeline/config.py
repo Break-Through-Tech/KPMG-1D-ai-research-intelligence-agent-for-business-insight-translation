@@ -19,6 +19,7 @@ class IndexingConfig:
 
     # Embedding model and the ChromaDB collection with one entry per paper
     embedding_model: str = "all-MiniLM-L6-v2"
+    embedding_provider: str = "sentence-transformers"
     papers_collection: str = "papers"
 
     # ChromaDB collection with one entry per validated passage
